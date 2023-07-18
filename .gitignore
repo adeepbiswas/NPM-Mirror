@@ -1,0 +1,14 @@
+.cache
+.config
+.dotnet
+.local
+.vscode-server
+couchdb-docker
+npm-mirror-env
+toy-data
+.bash_history
+.bash_logout
+.bashrc
+.profile
+.sudo_as_admin_successful
+.wget-hsts

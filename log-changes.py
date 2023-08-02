@@ -66,19 +66,26 @@ def download_document_and_package(change):
                 json.dump(doc, doc_file)
 
             # Save the updated package as a tar file
-            package_url = f"https://registry.npmjs.org/{package_name}/-/{package_name}-{doc['version']}.tgz"
-            package_filename = f"{change['id']}_package.tgz"
+            # print("----------")
+            # print(package_name)
+            # print(doc.keys())
+            latest = doc['dist-tags']['latest']
+            package_url = doc['versions'][latest]['dist']['tarball']
+            # print("----------")
+            # package_url = f"https://registry.npmjs.org/{package_name}/-/{package_name}-{doc['dist-tags']['latest']}.tgz"
+            package_filename = f"{name}_package.tgz"
             package_path = os.path.join(package_dir, package_filename)
             response = requests.get(package_url)
+            print("Response - ",response)
             if response.status_code == 200:
                 with open(package_path, 'wb') as package_file:
                     package_file.write(response.content)
-
+                print("saved")
             return doc_path, package_path
     return None, None
 
-def compress_files(change_id, timestamp, doc_path, package_path):
-    compressed_filename = f"{change_id}_{timestamp}.zip"
+def compress_files(package_name, revision_id, doc_path, package_path):
+    compressed_filename = f"{package_name}_{revision_id}.zip"
     with zipfile.ZipFile(compressed_filename, 'w') as zip_file:
         if doc_path:
             zip_file.write(doc_path, os.path.basename(doc_path))
@@ -117,17 +124,25 @@ def stream_npm_updates():
             change = json.loads(line)
             print(change['seq'])
             print(change['id'])
+            print(change['changes'])
+            print(change['doc']['_rev'])
             print(change.keys())
             doc_path, package_path = download_document_and_package(change)
             print(doc_path)
             if doc_path or package_path:
-                compress_files(change['id'], change['timestamp'], doc_path, package_path)
+                package_name = change['id']
+                if "/" in package_name:
+                    segments = package_name.split("/")
+                    name = segments[-1]
+                else:
+                    name = package_name
+                compress_files(name, change['doc']['_rev'], doc_path, package_path)
                 # Get the package name to store the change details
                 package_name = change.get('doc', {}).get('name')
                 if package_name:
                     # Update the change count for the package and get the updated count
-                    change_count = update_change_count(package_name)
+                    # change_count = update_change_count(package_name)
                     # Store important details regarding the change in the local CouchDB
-                    store_change_details(change, f"{change['id']}_{change['timestamp']}.zip", change_count)
+                    # store_change_details(change, f"{change['id']}_{change['timestamp']}.zip", change_count)
 
 stream_npm_updates()

@@ -8,13 +8,14 @@ import couchdb
 import datetime
 import queue
 import threading
+import concurrent.futures
 
 LOCAL_PACKAGE_DIR = "temp_packages"
 REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 5e+6
 DB_USER = 'admin'
 DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'test_run_1'
+DATABASE_NAME = 'test_run_2'
 
 # Establish Couchdb server connection
 server = couchdb.Server('http://{user}:{password}@localhost:5984/'.format(user=DB_USER, password=DB_PASSWORD))
@@ -207,25 +208,60 @@ def store_change_details(change, db, zip_path):
 # Initialize a queue to hold the unprocessed changes
 change_queue = queue.Queue()
 
-# Function to process changes from the queue asynchronously
-def process_changes_async(db):  # Pass 'db' as an argument
-    while True:
-        change = change_queue.get()
-        raw_package_name = change['id']
-        print("Change sequence ID: ", change['seq'])
-        print("Raw package name: ", raw_package_name)
-        if "/" in raw_package_name:
-            segments = raw_package_name.split("/")
-            package_name = segments[-1]
-        else:
-            package_name = raw_package_name
+# # Function to process changes from the queue asynchronously
+# def process_changes_async(db):  # Pass 'db' as an argument
+#     while True:
+#         change = change_queue.get()
+#         raw_package_name = change['id']
+#         print("Change sequence ID: ", change['seq'])
+#         print("Raw package name: ", raw_package_name)
+#         if "/" in raw_package_name:
+#             segments = raw_package_name.split("/")
+#             package_name = segments[-1]
+#         else:
+#             package_name = raw_package_name
         
-        doc_path, tarball_path = download_document_and_package(change, package_name)
+#         doc_path, tarball_path = download_document_and_package(change, package_name)
         
-        if doc_path:
-            zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
-            store_change_details(change, db, zip_path)
-        change_queue.task_done()
+#         if doc_path:
+#             zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
+#             store_change_details(change, db, zip_path)
+#         change_queue.task_done()
+###
+
+# Flag to indicate that the streaming has finished
+streaming_finished = False
+
+# Function to process a single change
+def process_change(change):
+    raw_package_name = change['id']
+    print("Change sequence ID: ", change['seq'])
+    print("Raw package name: ", raw_package_name)
+    if "/" in raw_package_name:
+        segments = raw_package_name.split("/")
+        package_name = segments[-1]
+    else:
+        package_name = raw_package_name
+    
+    doc_path, tarball_path = download_document_and_package(change, package_name)
+    
+    if doc_path:
+        zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
+        store_change_details(change, db, zip_path)
+
+# Function to process changes from the queue asynchronously using a thread pool
+def process_changes_async(db, num_threads=4):  # Pass 'db' as an argument and set the number of threads
+    with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
+        while True:
+            try:
+                change = change_queue.get(timeout=1)  # Wait for 1 second for a change to appear in the queue
+            except queue.Empty:
+                if streaming_finished:  # Exit the loop if streaming has finished and the queue is empty
+                    break
+                else:
+                    continue
+            executor.submit(process_change, change)
+            change_queue.task_done()
 
 # Main function that reads changes from the NPM Registry and adds them to the queue
 def stream_npm_updates():
@@ -256,6 +292,9 @@ async_process_thread.start()
 
 # Start streaming and processing changes
 stream_npm_updates()
+
+# Indicate that streaming has finished
+streaming_finished = True
 
 # Wait for the queue to be empty, meaning all changes have been processed
 change_queue.join()

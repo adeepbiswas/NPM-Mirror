@@ -259,5 +259,3 @@ stream_npm_updates()
 
 # Wait for the queue to be empty, meaning all changes have been processed
 change_queue.join()
-
-# At this point, all changes have been processed

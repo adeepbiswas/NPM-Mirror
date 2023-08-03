@@ -6,13 +6,15 @@ import zipfile
 import re
 import couchdb
 import datetime
+import queue
+import threading
 
 LOCAL_PACKAGE_DIR = "temp_packages"
 REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 5e+6
 DB_USER = 'admin'
 DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'new-toy-db'
+DATABASE_NAME = 'test_run_1'
 
 # Establish Couchdb server connection
 server = couchdb.Server('http://{user}:{password}@localhost:5984/'.format(user=DB_USER, password=DB_PASSWORD))
@@ -80,10 +82,10 @@ def download_document_and_package(change, package_name):
         
         with open(doc_path, 'w') as doc_file:
             json.dump(doc, doc_file)
-            print("Saved package JSON")  
+            print("--Saved package JSON")  
         if os.path.getsize(doc_path) > MAX_SIZE:
             os.remove(doc_path)
-            print("Package JSON too large, removed")
+            print("--Package JSON too large, removed")
             saved = False
             doc_path = None
 
@@ -100,17 +102,24 @@ def download_document_and_package(change, package_name):
             if response.status_code == 200:
                 with open(tarball_path, 'wb') as tarball_file:
                     tarball_file.write(response.content)
-                print("Saved Tar file")
+                print("--Saved Tar file")
                 
                 if os.path.getsize(tarball_path) > MAX_SIZE:
                     os.remove(tarball_path)
-                    print("Tarball too large, removed")
+                    print("--Tarball too large, removed")
                     if doc_path:
                         os.remove(doc_path)
-                        print("Corresponding JSON removed as well")
+                        print("--Corresponding JSON removed as well")
                         doc_path = None
                     saved = False
                     tarball_path = None
+            else:
+                if doc_path:
+                    os.remove(doc_path)
+                    print("--Corresponding JSON removed as well")
+                    doc_path = None
+                saved = False
+                tarball_path = None    
                     
             return doc_path, tarball_path
     return None, None
@@ -128,7 +137,7 @@ def compress_files(raw_package_name, package_name, revision_id, doc_path, tarbal
         if tarball_path:
             zip_file.write(tarball_path, os.path.basename(tarball_path))
             os.remove(tarball_path)  # Remove the individual tar file from local (temp) directory after compression
-    print("Compressed zip saved in remote")
+    print("--Compressed zip saved in remote")
     return zip_path
 
 # Function to save the processed change details in our own database
@@ -152,10 +161,73 @@ def store_change_details(change, db, zip_path):
         'change_save_path': zip_path
     }
     db.save(data)
-    print("Change record added to database")
+    print("--Change record added to database")
 
 # Main function that reads changes from the NPM Registry and processes them by downloading
 # corresponding files and making an entry for the change into our database
+# def stream_npm_updates():
+#     # access the changes API from Replicate (Public DB Replica for NPM Registry)
+#     url = 'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since=25318031' #&limit=20'
+#     response = requests.get(url, stream=True)
+#     if response.status_code != 200:
+#         print(f'Error connecting to the CouchDB stream: {response.status_code}')
+#         return
+
+#     # Create or connect to our database
+#     db = create_or_connect_db(server, DATABASE_NAME)
+
+#     # counter for number of changes read from the stream
+#     i = 0
+
+#     for line in response.iter_lines():
+#         i += 1
+#         # print(i)
+#         # print(line)
+#         if line:
+#             change = json.loads(line)
+#             raw_package_name = change['id']
+#             print("Change sequence ID: ", change['seq'])
+#             print("Raw package name: ", raw_package_name)
+#             if "/" in raw_package_name:
+#                 segments = raw_package_name.split("/")
+#                 package_name = segments[-1]
+#             else:
+#                 package_name = raw_package_name
+            
+#             doc_path, tarball_path = download_document_and_package(change, package_name)
+            
+#             if doc_path:
+#                 zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
+#                 store_change_details(change, db, zip_path)
+        # break
+
+# stream_npm_updates()
+###
+
+# Initialize a queue to hold the unprocessed changes
+change_queue = queue.Queue()
+
+# Function to process changes from the queue asynchronously
+def process_changes_async(db):  # Pass 'db' as an argument
+    while True:
+        change = change_queue.get()
+        raw_package_name = change['id']
+        print("Change sequence ID: ", change['seq'])
+        print("Raw package name: ", raw_package_name)
+        if "/" in raw_package_name:
+            segments = raw_package_name.split("/")
+            package_name = segments[-1]
+        else:
+            package_name = raw_package_name
+        
+        doc_path, tarball_path = download_document_and_package(change, package_name)
+        
+        if doc_path:
+            zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
+            store_change_details(change, db, zip_path)
+        change_queue.task_done()
+
+# Main function that reads changes from the NPM Registry and adds them to the queue
 def stream_npm_updates():
     # access the changes API from Replicate (Public DB Replica for NPM Registry)
     url = 'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since=25318031' #&limit=20'
@@ -164,32 +236,28 @@ def stream_npm_updates():
         print(f'Error connecting to the CouchDB stream: {response.status_code}')
         return
 
-    # Create or connect to our database
-    db = create_or_connect_db(server, DATABASE_NAME)
-
     # counter for number of changes read from the stream
     i = 0
 
     for line in response.iter_lines():
         i += 1
-        # print(i)
-        # print(line)
         if line:
             change = json.loads(line)
-            raw_package_name = change['id']
-            print("Change sequence ID: ", change['seq'])
-            print("Raw package name: ", raw_package_name)
-            if "/" in raw_package_name:
-                segments = raw_package_name.split("/")
-                package_name = segments[-1]
-            else:
-                package_name = raw_package_name
-            
-            doc_path, tarball_path = download_document_and_package(change, package_name)
-            
-            if doc_path:
-                zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
-                store_change_details(change, db, zip_path)
-        break
+            change_queue.put(change)  # Put the change into the queue for processing
+        # break
 
+# Create or connect to our database
+db = create_or_connect_db(server, DATABASE_NAME)
+
+# Start asynchronous processing of changes
+async_process_thread = threading.Thread(target=process_changes_async, args=(db,))  # Pass 'db' as an argument
+async_process_thread.daemon = True
+async_process_thread.start()
+
+# Start streaming and processing changes
 stream_npm_updates()
+
+# Wait for the queue to be empty, meaning all changes have been processed
+change_queue.join()
+
+# At this point, all changes have been processed

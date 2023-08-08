@@ -9,13 +9,21 @@ import datetime
 import queue
 import threading
 import concurrent.futures
+from prometheus_client import start_http_server, Summary, Counter, Gauge
 
 LOCAL_PACKAGE_DIR = "temp_packages"
 REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 5e+6
 DB_USER = 'admin'
 DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'test_run_2'
+DATABASE_NAME = 'test_run_3'
+
+# Create a metric to track time spent and requests made.
+REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
+npmUpdateCounter = Counter('npmmirror_npm_update_counter', 'number of npm updates processed')
+downloadQueueLength = Gauge('npmmirror_download_queue_length', 'length of the download queue')
+lastSeq = Gauge('npmmirror_last_seq_processed', 'value of the last seq processed')
+newestSeq = Gauge('npmmirror_newest_seq', 'value of the newest seq on the server')
 
 # Establish Couchdb server connection
 server = couchdb.Server('http://{user}:{password}@localhost:5984/'.format(user=DB_USER, password=DB_PASSWORD))
@@ -233,6 +241,7 @@ change_queue = queue.Queue()
 streaming_finished = False
 
 # Function to process a single change
+@REQUEST_TIME.time()
 def process_change(change):
     raw_package_name = change['id']
     print("Change sequence ID: ", change['seq'])
@@ -248,6 +257,8 @@ def process_change(change):
     if doc_path:
         zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
         store_change_details(change, db, zip_path)
+    
+    npmUpdateCounter.inc()
 
 # Function to process changes from the queue asynchronously using a thread pool
 def process_changes_async(db, num_threads=4):  # Pass 'db' as an argument and set the number of threads
@@ -282,19 +293,23 @@ def stream_npm_updates():
             change_queue.put(change)  # Put the change into the queue for processing
         # break
 
-# Create or connect to our database
-db = create_or_connect_db(server, DATABASE_NAME)
+if __name__ == '__main__':
+    # Start up the server to expose the metrics.
+    start_http_server(8000)
 
-# Start asynchronous processing of changes
-async_process_thread = threading.Thread(target=process_changes_async, args=(db,))  # Pass 'db' as an argument
-async_process_thread.daemon = True
-async_process_thread.start()
+    # Create or connect to our database
+    db = create_or_connect_db(server, DATABASE_NAME)
 
-# Start streaming and processing changes
-stream_npm_updates()
+    # Start asynchronous processing of changes
+    async_process_thread = threading.Thread(target=process_changes_async, args=(db,))  # Pass 'db' as an argument
+    async_process_thread.daemon = True
+    async_process_thread.start()
 
-# Indicate that streaming has finished
-streaming_finished = True
+    # Start streaming and processing changes
+    stream_npm_updates()
 
-# Wait for the queue to be empty, meaning all changes have been processed
-change_queue.join()
+    # Indicate that streaming has finished
+    streaming_finished = True
+
+    # Wait for the queue to be empty, meaning all changes have been processed
+    change_queue.join()

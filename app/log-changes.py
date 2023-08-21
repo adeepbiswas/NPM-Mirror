@@ -16,7 +16,7 @@ REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 5e+6
 DB_USER = 'admin'
 DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'test_run_3'
+DATABASE_NAME = 'test_run_4'
 
 # Create a metric to track time spent and requests made.
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
@@ -27,6 +27,12 @@ newestSeq = Gauge('npmmirror_newest_seq', 'value of the newest seq on the server
 
 # Establish Couchdb server connection
 server = couchdb.Server('http://{user}:{password}@localhost:5984/'.format(user=DB_USER, password=DB_PASSWORD))
+
+# Initialize a queue to hold the unprocessed changes
+change_queue = queue.Queue()
+
+# Flag to indicate that the streaming has finished
+streaming_finished = False
 
 # Function to create or connect to our own CouchDB database
 def create_or_connect_db(server, database_name):
@@ -171,8 +177,10 @@ def store_change_details(change, db, zip_path):
     }
     db.save(data)
     print("--Change record added to database")
+    
+############################################
 
-# Main function that reads changes from the NPM Registry and processes them by downloading
+# Main function that reads changes from the NPM Registry and processes them directly in a single thread
 # corresponding files and making an entry for the change into our database
 # def stream_npm_updates():
 #     # access the changes API from Replicate (Public DB Replica for NPM Registry)
@@ -211,12 +219,10 @@ def store_change_details(change, db, zip_path):
         # break
 
 # stream_npm_updates()
-###
 
-# Initialize a queue to hold the unprocessed changes
-change_queue = queue.Queue()
+############################################
 
-# # Function to process changes from the queue asynchronously
+# # Function to process changes from the queue asynchronously in a single thread
 # def process_changes_async(db):  # Pass 'db' as an argument
 #     while True:
 #         change = change_queue.get()
@@ -235,10 +241,8 @@ change_queue = queue.Queue()
 #             zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
 #             store_change_details(change, db, zip_path)
 #         change_queue.task_done()
-###
 
-# Flag to indicate that the streaming has finished
-streaming_finished = False
+############################################
 
 # Function to process a single change
 @REQUEST_TIME.time()
@@ -265,7 +269,10 @@ def process_changes_async(db, num_threads=4):  # Pass 'db' as an argument and se
     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
         while True:
             try:
+                queue_size = change_queue.qsize()
+                print(f"Queue size: {queue_size}")
                 change = change_queue.get(timeout=1)  # Wait for 1 second for a change to appear in the queue
+                downloadQueueLength.set(change_queue.qsize())
             except queue.Empty:
                 if streaming_finished:  # Exit the loop if streaming has finished and the queue is empty
                     break
@@ -291,6 +298,7 @@ def stream_npm_updates():
         if line:
             change = json.loads(line)
             change_queue.put(change)  # Put the change into the queue for processing
+            print("change put in queue")
         # break
 
 if __name__ == '__main__':

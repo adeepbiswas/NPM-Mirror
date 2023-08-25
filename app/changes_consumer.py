@@ -11,13 +11,17 @@ import threading
 import concurrent.futures
 from prometheus_client import start_http_server, Summary, Counter, Gauge
 from confluent_kafka import Consumer, Producer, KafkaError
+from changes_producer import streaming_finished
+from confluent_kafka.admin import AdminClient, NewTopic
 
 LOCAL_PACKAGE_DIR = "temp_packages"
 REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 5e+6
 DB_USER = 'admin'
 DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'test_run_5'
+DATABASE_NAME = 'test_run_8'
+KAFKA_TOPIC_NUM_PARTITIONS = 4
+KAFKA_TOPIC_REPLICATION_FACTOR = 1
 
 # Create a metric to track time spent and requests made.
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
@@ -29,17 +33,21 @@ newestSeq = Gauge('npmmirror_newest_seq', 'value of the newest seq on the server
 # Establish Couchdb server connection
 server = couchdb.Server('http://{user}:{password}@localhost:5984/'.format(user=DB_USER, password=DB_PASSWORD))
 
-# Initialize a queue to hold the unprocessed changes
-change_queue = queue.Queue()
-
-# Flag to indicate that the streaming has finished
-streaming_finished = False
-
 # Initialize a lock for accessing shared resources
 shared_resource_lock = threading.Lock()
 
-# # Initialize Kafka producer and consumer
-# kafka_producer = Producer({"bootstrap.servers": "localhost:9092"})
+#creating kafka admin client and topics
+ac = AdminClient({"bootstrap.servers": "localhost:9092"})
+ 
+topic1 = NewTopic('downloaded_in_local', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
+topic2 = NewTopic('moved_to_remote', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
+topic3 = NewTopic('added_to_db', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
+topic4 = NewTopic('run_logs', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
+
+fs = ac.create_topics([topic1, topic2, topic3, topic4])
+
+# Initialize Kafka producer
+kafka_producer = Producer({"bootstrap.servers": "localhost:9092"})
 
 kafka_consumer = Consumer({
     "bootstrap.servers": "localhost:9092",
@@ -53,10 +61,14 @@ kafka_consumer.subscribe(["npm-changes"])
 def create_or_connect_db(server, database_name):
     try:
         db = server.create(database_name)
-        print(f"Created new database: {database_name}")
+        log_message = f"Created new database: {database_name}"
+        # print(log_message)
+        kafka_producer.produce("run_logs", value=log_message)
     except couchdb.http.PreconditionFailed:
         db = server[database_name]
-        print(f"Connected to existing database: {database_name}")
+        log_message = f"Connected to existing database: {database_name}"
+        # print(log_mesage)
+        kafka_producer.produce("run_logs", value=log_message)
     return db
 
 # Function to remove special characters from package names
@@ -112,10 +124,14 @@ def download_document_and_package(change, package_name):
         
         with open(doc_path, 'w') as doc_file:
             json.dump(doc, doc_file)
-            print("--Saved package JSON")  
+            log_message = "--Saved package JSON"
+            # print(log_mesage)  
+            kafka_producer.produce("run_logs", value=log_message)
         if os.path.getsize(doc_path) > MAX_SIZE:
             os.remove(doc_path)
-            print("--Package JSON too large, removed")
+            log_message = "--Package JSON too large, removed"
+            # print(log_mesage)
+            kafka_producer.produce("run_logs", value=log_message)
             saved = False
             doc_path = None
 
@@ -132,21 +148,29 @@ def download_document_and_package(change, package_name):
             if response.status_code == 200:
                 with open(tarball_path, 'wb') as tarball_file:
                     tarball_file.write(response.content)
-                print("--Saved Tar file")
+                log_message = "--Saved Tar file"
+                # print(log_mesage)
+                kafka_producer.produce("run_logs", value=log_message)
                 
                 if os.path.getsize(tarball_path) > MAX_SIZE:
                     os.remove(tarball_path)
-                    print("--Tarball too large, removed")
+                    log_message = "--Tarball too large, removed"
+                    # print(log_mesage)
+                    kafka_producer.produce("run_logs", value=log_message)
                     if doc_path:
                         os.remove(doc_path)
-                        print("--Corresponding JSON removed as well")
+                        log_message = "--Corresponding JSON removed as well"
+                        # print(log_mesage)
+                        kafka_producer.produce("run_logs", value=log_message)
                         doc_path = None
                     saved = False
                     tarball_path = None
             else:
                 if doc_path:
                     os.remove(doc_path)
-                    print("--Corresponding JSON removed as well")
+                    log_message = "--Corresponding JSON removed as well"
+                    # print(log_message)
+                    kafka_producer.produce("run_logs", value=log_message)
                     doc_path = None
                 saved = False
                 tarball_path = None    
@@ -167,7 +191,10 @@ def compress_files(raw_package_name, package_name, revision_id, doc_path, tarbal
         if tarball_path:
             zip_file.write(tarball_path, os.path.basename(tarball_path))
             os.remove(tarball_path)  # Remove the individual tar file from local (temp) directory after compression
-    print("--Compressed zip saved in remote")
+    log_message = "--Compressed zip saved in remote"
+    # print(log_message)
+    kafka_producer.produce("run_logs", value=log_message)
+    
     return zip_path
 
 # Function to save the processed change details in our own database
@@ -191,7 +218,9 @@ def store_change_details(change, db, zip_path):
         'change_save_path': zip_path
     }
     db.save(data)
-    print("--Change record added to database")
+    log_message = "--Change record added to database"
+    # print(log_message)
+    kafka_producer.produce("run_logs", value=log_message)
     
 ############################################
 
@@ -261,10 +290,16 @@ def store_change_details(change, db, zip_path):
 
 # Function to process a single change
 @REQUEST_TIME.time()
-def process_change(change):
+def process_change(db, change):
     raw_package_name = change['id']
-    print("Change sequence ID: ", change['seq'])
-    print("Raw package name: ", raw_package_name)
+    
+    log_message = f"Change sequence ID: {change['seq']}"
+    # print(log_message)
+    kafka_producer.produce("run_logs", value=log_message)
+    log_message = f"Raw package name: {raw_package_name}"
+    # print(log_message)
+    kafka_producer.produce("run_logs", value=log_message)
+    
     if "/" in raw_package_name:
         segments = raw_package_name.split("/")
         package_name = segments[-1]
@@ -272,10 +307,17 @@ def process_change(change):
         package_name = raw_package_name
     
     doc_path, tarball_path = download_document_and_package(change, package_name)
+    # add to download queue
+    # kafka_producer.produce("downloaded_in_local", value=change['seq'])
+    kafka_producer.produce("downloaded_in_local", str(change['seq']))
     
     if doc_path:
         zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
+        # add to moved to remote queue
+        kafka_producer.produce("moved_to_remote", value=str(change['seq']))
         store_change_details(change, db, zip_path)
+        # add to recorded in db queue
+        kafka_producer.produce("added_to_db", value=str(change['seq']))
     
     npmUpdateCounter.inc()
 
@@ -323,71 +365,50 @@ def process_change(change):
 ############################################
 
 # Function to process changes from Kafka stream asynchronously using a thread pool
-def process_changes_async(db, num_threads=4):  
-    print("hello1")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
-        while True:
-            print("hello2")
-            msg = kafka_consumer.poll(100.0)  # Poll Kafka stream for messages
-            
-            if msg is None:  # Continue if no message received
-                if streaming_finished:  # Exit the loop if streaming has finished
-                    break
-                continue
-            
-            change = json.loads(msg.value())
-            
-            with shared_resource_lock:
-                downloadQueueLength.set(kafka_consumer.assignment()[0].high-watermark)
-            
-            executor.submit(process_change, db, change)
-            
-            with shared_resource_lock:
-                kafka_consumer.commit(msg)
-                
-# # Main function that reads changes from Kafka stream and adds them to the queue
-# def stream_npm_updates():
-#     url = 'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since=25318031'
-#     response = requests.get(url, stream=True)
-    
-#     if response.status_code != 200:
-#         print(f'Error connecting to the CouchDB stream: {response.status_code}')
-#         return
-    
-#     for line in response.iter_lines():
-#         if line:
-#             try:
-#                 kafka_producer.produce("npm-changes", value=line)
-#                 kafka_producer.flush()
-#                 print("Change sent to Kafka stream")
-#             except Exception as e:
-#                 if "Message size too large" in str(e) or \
-#                    "MSG_SIZE_TOO_LARGE" in str(e):
-#                     print("Message size too large. Unable to produce message.")
-#                 else:
-#                     print("Error:", e)
-#             # except KafkaError as e:
-#             #     if e.args[0].code() == KafkaError.MSG_SIZE_TOO_LARGE:
-#             #         print("Message size too large. Unable to produce message.")
+def process_changes_async(db):  
+    # with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
+    while True:
+        msg = kafka_consumer.poll(1.0)  # Poll Kafka stream for messages
+        
+        if msg is None:  # Continue if no message received
+            if streaming_finished:  # Exit the loop if streaming has finished
+                log_message = "Stream empty and streaming finished."
+                # print(log_message)
+                kafka_producer.produce("run_logs", value=log_message)
+                break
+            log_message = "Stream empty."
+            # print(log_message)
+            kafka_producer.produce("run_logs", value=log_message)
+            continue
+        
+        change = json.loads(msg.value())
+        
+        # with shared_resource_lock:
+        #     downloadQueueLength.set(kafka_consumer.assignment()[0].high-watermark)
+        
+        # executor.submit(process_change, db, change)
+        try:
+            process_change(db, change)
+            log_message = "Change from kafka stream processed."
+            # print(log_message)
+            kafka_producer.produce("run_logs", value=log_message)
+        except Exception as e:
+            log_message = f"Error:{e}"
+            # print(log_message)
+            kafka_producer.produce("run_logs", value=log_message)
+        
+        # with shared_resource_lock:
+        kafka_consumer.commit(msg)
 
 if __name__ == '__main__':
     # Start up the server to expose the metrics.
-    start_http_server(8000)
+    # start_http_server(8000)
 
     # Create or connect to our database
     db = create_or_connect_db(server, DATABASE_NAME)
 
     # Start asynchronous processing of changes
-    async_process_thread = threading.Thread(target=process_changes_async, args=(db,))  # Pass 'db' as an argument
-    async_process_thread.daemon = True
-    async_process_thread.start()
-
-    # # Start streaming and processing changes
-    # stream_npm_updates()
-
-    # # Indicate that streaming has finished
-    # streaming_finished = True
-    # print(streaming_finished)
-
-    # Wait for the queue to be empty, meaning all changes have been processed
-    change_queue.join()
+    process_changes_async(db)
+    # async_process_thread = threading.Thread(target=process_changes_async, args=(db,))  # Pass 'db' as an argument
+    # async_process_thread.daemon = True
+    # async_process_thread.start()

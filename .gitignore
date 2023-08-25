@@ -15,3 +15,5 @@ toy-data
 .gitconfig
 packages
 temp_packages
+.parallel
+app/__pycache__

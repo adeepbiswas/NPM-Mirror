@@ -19,7 +19,7 @@ REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 5e+6
 DB_USER = 'admin'
 DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'test_run_9'
+DATABASE_NAME = 'test_run_10'
 KAFKA_TOPIC_NUM_PARTITIONS = 4
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
 SUBDIRECTORY_HASH_LENGTH = 3
@@ -245,6 +245,11 @@ def store_change_details(change, db, zip_path):
     package_versions_count = len(change['doc']['versions'].keys())
     package_latest_change_time = change['doc']['time'][package_latest_version]
     
+    package_deleted = False
+    change_keys = list(change.keys())
+    if 'deleted' in change_keys:
+        package_deleted = change['deleted']
+    
     data = {
         'package_name': package_name, 
         'change_seq_id': change_seq_id,
@@ -252,7 +257,8 @@ def store_change_details(change, db, zip_path):
         'package_latest_version': package_latest_version,
         'package_versions_count': package_versions_count,
         'package_latest_change_time': package_latest_change_time,
-        'change_save_path': zip_path
+        'change_save_path': zip_path,
+        'package_deleted' : package_deleted
     }
     db.save(data)
     log_message = "--Change record added to database"

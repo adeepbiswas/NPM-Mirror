@@ -52,7 +52,7 @@ def read_latest_seq_id_from_file(filename, default_value="now"):
 def stream_npm_updates():
     seq_id = read_latest_seq_id_from_file(SEQ_ID_FILE_NAME)
     url = f'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since={seq_id}'
-    print(url)
+    print("Starting from Seq ID - ", seq_id)
     response = requests.get(url, stream=True)
     
     if response.status_code != 200:
@@ -62,6 +62,7 @@ def stream_npm_updates():
     for line in response.iter_lines():
         if line:
             change = json.loads(line)
+                
             try:
                 kafka_producer.produce("npm-changes", value=line)
                 kafka_producer.flush()

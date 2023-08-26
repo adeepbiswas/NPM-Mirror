@@ -15,6 +15,7 @@ from confluent_kafka.admin import AdminClient, NewTopic
 
 KAFKA_TOPIC_NUM_PARTITIONS = 4
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
+SEQ_ID_FILE_NAME = "latest_seq_ID.txt"
 
 # Flag to indicate that the streaming has finished
 streaming_finished = False
@@ -30,9 +31,28 @@ fs = ac.create_topics([topic1, topic2, topic3])
 # Initialize Kafka producer
 kafka_producer = Producer({"bootstrap.servers": "localhost:9092"})
 
+#stores the last seq ID read from the NPM API 
+def write_latest_seq_id_to_file(filename, variable):
+    with open(filename, "w") as file:
+        file.write(str(variable))
+
+#reads the last seq ID stored 
+def read_latest_seq_id_from_file(filename, default_value="now"):
+    try:
+        with open(filename, "r") as file:
+            content = file.read()
+            if content:
+                return content.strip()
+            else:
+                return default_value
+    except FileNotFoundError:
+        return default_value
+
 # function that reads changes from NPM changes API stream and adds them to kafka stream
 def stream_npm_updates():
-    url = 'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since=25318031'
+    seq_id = read_latest_seq_id_from_file(SEQ_ID_FILE_NAME)
+    url = f'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since={seq_id}'
+    print(url)
     response = requests.get(url, stream=True)
     
     if response.status_code != 200:
@@ -41,12 +61,13 @@ def stream_npm_updates():
     
     for line in response.iter_lines():
         if line:
+            change = json.loads(line)
             try:
                 kafka_producer.produce("npm-changes", value=line)
                 kafka_producer.flush()
                 print("Change sent to Kafka stream")
+                write_latest_seq_id_to_file(SEQ_ID_FILE_NAME, change['seq'])
             except Exception as e:
-                change = json.loads(line)
                 if "Message size too large" in str(e) or \
                    "MSG_SIZE_TOO_LARGE" in str(e):
                     log_message = "Seq ID - {change['seq']} - Message size too large. Unable to produce message."

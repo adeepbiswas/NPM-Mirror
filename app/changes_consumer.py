@@ -67,11 +67,13 @@ def create_or_connect_db(server, database_name):
         log_message = f"Created new database: {database_name}"
         print(log_message)
         kafka_producer.produce("run_logs", value=log_message)
+        kafka_producer.flush()
     except couchdb.http.PreconditionFailed:
         db = server[database_name]
         log_message = f"Connected to existing database: {database_name}"
         print(log_message)
         kafka_producer.produce("run_logs", value=log_message)
+        kafka_producer.flush()
     return db
 
 # Function to remove special characters from package names
@@ -134,11 +136,13 @@ def download_document_and_package(change, package_name):
             log_message = "--Saved package JSON"
             print(log_message)  
             kafka_producer.produce("run_logs", value=log_message)
+            kafka_producer.flush()
         if os.path.getsize(doc_path) > MAX_SIZE:
             os.remove(doc_path)
             log_message = "--Package JSON too large, removed"
             print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
+            kafka_producer.flush()
             saved = False
             doc_path = None
 
@@ -158,17 +162,20 @@ def download_document_and_package(change, package_name):
                 log_message = "--Saved Tar file"
                 print(log_message)
                 kafka_producer.produce("run_logs", value=log_message)
+                kafka_producer.flush()
                 
                 if os.path.getsize(tarball_path) > MAX_SIZE:
                     os.remove(tarball_path)
                     log_message = "--Tarball too large, removed"
                     print(log_message)
                     kafka_producer.produce("run_logs", value=log_message)
+                    kafka_producer.flush()
                     if doc_path:
                         os.remove(doc_path)
                         log_message = "--Corresponding JSON removed as well"
                         print(log_message)
                         kafka_producer.produce("run_logs", value=log_message)
+                        kafka_producer.flush()
                         doc_path = None
                     saved = False
                     tarball_path = None
@@ -178,6 +185,7 @@ def download_document_and_package(change, package_name):
                     log_message = "--Corresponding JSON removed as well"
                     print(log_message)
                     kafka_producer.produce("run_logs", value=log_message)
+                    kafka_producer.flush()
                     doc_path = None
                 saved = False
                 tarball_path = None    
@@ -203,6 +211,7 @@ def delete_oldest_zip(directory):
         log_message = f"Deleted the oldest zip file: {oldest_zip}"
         print(log_message)
         kafka_producer.produce("run_logs", value=log_message)
+        kafka_producer.flush()
 
 # Function to compress the downloaded JSON and tarball into a zip file and store it in remote directory
 def compress_files(raw_package_name, package_name, revision_id, doc_path, tarball_path):
@@ -221,6 +230,7 @@ def compress_files(raw_package_name, package_name, revision_id, doc_path, tarbal
     log_message = "--Compressed zip saved in remote"
     print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
+    kafka_producer.flush()
     
     return zip_path
 
@@ -248,6 +258,7 @@ def store_change_details(change, db, zip_path):
     log_message = "--Change record added to database"
     print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
+    kafka_producer.flush()
     
 ############################################
 
@@ -323,9 +334,11 @@ def process_change(db, change):
     log_message = f"Change sequence ID: {change['seq']}"
     print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
+    kafka_producer.flush()
     log_message = f"Raw package name: {raw_package_name}"
     print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
+    kafka_producer.flush()
     
     if "/" in raw_package_name:
         segments = raw_package_name.split("/")
@@ -337,16 +350,20 @@ def process_change(db, change):
     # add to download queue
     # kafka_producer.produce("downloaded_in_local", value=change['seq'])
     kafka_producer.produce("downloaded_in_local", str(change['seq']))
+    kafka_producer.flush()
     
     if doc_path:
         zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
         # add to moved to remote queue
         kafka_producer.produce("moved_to_remote", value=str(change['seq']))
+        kafka_producer.flush()
         store_change_details(change, db, zip_path)
         # add to recorded in db queue
         kafka_producer.produce("added_to_db", value=str(change['seq']))
+        kafka_producer.flush()
     else:
         kafka_producer.produce("skipped_changes", value=str(change['seq']))
+        kafka_producer.flush()
     
     npmUpdateCounter.inc()
 
@@ -404,10 +421,12 @@ def process_changes_async(db):
                 log_message = "Stream empty and streaming finished."
                 print(log_message)
                 kafka_producer.produce("run_logs", value=log_message)
+                kafka_producer.flush()
                 break
             log_message = "Stream empty."
             print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
+            kafka_producer.flush()
             continue
         
         change = json.loads(msg.value())
@@ -421,11 +440,14 @@ def process_changes_async(db):
             log_message = "Change from kafka stream processed."
             print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
+            kafka_producer.flush()
         except Exception as e:
             log_message = f"Error:{e}, skipped change"
             print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
+            kafka_producer.flush()
             kafka_producer.produce("skipped_changes", value=str(change['seq']))
+            kafka_producer.flush()
             
         
         # with shared_resource_lock:

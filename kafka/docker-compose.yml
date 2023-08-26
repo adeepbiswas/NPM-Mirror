@@ -25,3 +25,12 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 5242880
+
+  kafka-exporter:
+    image: danielqsj/kafka-exporter:latest
+    container_name: kafka-exporter
+    ports:
+      - "9308:9308"  # Expose Kafka Exporter's metrics endpoint
+    environment:
+      KAFKA_BROKER: "localhost:9092"  # Address of your Kafka broker
+  

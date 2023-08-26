@@ -19,7 +19,7 @@ REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 5e+6
 DB_USER = 'admin'
 DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'test_run_8'
+DATABASE_NAME = 'test_run_9'
 KAFKA_TOPIC_NUM_PARTITIONS = 4
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
 
@@ -62,12 +62,12 @@ def create_or_connect_db(server, database_name):
     try:
         db = server.create(database_name)
         log_message = f"Created new database: {database_name}"
-        # print(log_message)
+        print(log_message)
         kafka_producer.produce("run_logs", value=log_message)
     except couchdb.http.PreconditionFailed:
         db = server[database_name]
         log_message = f"Connected to existing database: {database_name}"
-        # print(log_mesage)
+        print(log_message)
         kafka_producer.produce("run_logs", value=log_message)
     return db
 
@@ -85,8 +85,12 @@ def create_directory_structure(package_name):
     if not os.path.exists(LOCAL_PACKAGE_DIR):
         os.mkdir(LOCAL_PACKAGE_DIR)
 
-    # Create subdirectories based on first character of the package name to add heirarchy
-    first_char = package_name[0].upper()
+    # Create subdirectories based on first 3 characters of the package name to add heirarchy
+    if len(package_name) >= 3:
+        first_char = package_name[0:3].upper()
+    else:
+        first_char = package_name[0].upper()
+    # first_char = package_name[0].upper()
     alpha_dir = os.path.join(REMOTE_PACKAGE_DIR, first_char)
     if not os.path.exists(alpha_dir):
         os.mkdir(alpha_dir)
@@ -125,12 +129,12 @@ def download_document_and_package(change, package_name):
         with open(doc_path, 'w') as doc_file:
             json.dump(doc, doc_file)
             log_message = "--Saved package JSON"
-            # print(log_mesage)  
+            print(log_message)  
             kafka_producer.produce("run_logs", value=log_message)
         if os.path.getsize(doc_path) > MAX_SIZE:
             os.remove(doc_path)
             log_message = "--Package JSON too large, removed"
-            # print(log_mesage)
+            print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
             saved = False
             doc_path = None
@@ -149,18 +153,18 @@ def download_document_and_package(change, package_name):
                 with open(tarball_path, 'wb') as tarball_file:
                     tarball_file.write(response.content)
                 log_message = "--Saved Tar file"
-                # print(log_mesage)
+                print(log_message)
                 kafka_producer.produce("run_logs", value=log_message)
                 
                 if os.path.getsize(tarball_path) > MAX_SIZE:
                     os.remove(tarball_path)
                     log_message = "--Tarball too large, removed"
-                    # print(log_mesage)
+                    print(log_message)
                     kafka_producer.produce("run_logs", value=log_message)
                     if doc_path:
                         os.remove(doc_path)
                         log_message = "--Corresponding JSON removed as well"
-                        # print(log_mesage)
+                        print(log_message)
                         kafka_producer.produce("run_logs", value=log_message)
                         doc_path = None
                     saved = False
@@ -169,7 +173,7 @@ def download_document_and_package(change, package_name):
                 if doc_path:
                     os.remove(doc_path)
                     log_message = "--Corresponding JSON removed as well"
-                    # print(log_message)
+                    print(log_message)
                     kafka_producer.produce("run_logs", value=log_message)
                     doc_path = None
                 saved = False
@@ -192,7 +196,7 @@ def compress_files(raw_package_name, package_name, revision_id, doc_path, tarbal
             zip_file.write(tarball_path, os.path.basename(tarball_path))
             os.remove(tarball_path)  # Remove the individual tar file from local (temp) directory after compression
     log_message = "--Compressed zip saved in remote"
-    # print(log_message)
+    print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
     
     return zip_path
@@ -219,7 +223,7 @@ def store_change_details(change, db, zip_path):
     }
     db.save(data)
     log_message = "--Change record added to database"
-    # print(log_message)
+    print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
     
 ############################################
@@ -294,10 +298,10 @@ def process_change(db, change):
     raw_package_name = change['id']
     
     log_message = f"Change sequence ID: {change['seq']}"
-    # print(log_message)
+    print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
     log_message = f"Raw package name: {raw_package_name}"
-    # print(log_message)
+    print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
     
     if "/" in raw_package_name:
@@ -373,11 +377,11 @@ def process_changes_async(db):
         if msg is None:  # Continue if no message received
             if streaming_finished:  # Exit the loop if streaming has finished
                 log_message = "Stream empty and streaming finished."
-                # print(log_message)
+                print(log_message)
                 kafka_producer.produce("run_logs", value=log_message)
                 break
             log_message = "Stream empty."
-            # print(log_message)
+            print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
             continue
         
@@ -390,11 +394,11 @@ def process_changes_async(db):
         try:
             process_change(db, change)
             log_message = "Change from kafka stream processed."
-            # print(log_message)
+            print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
         except Exception as e:
             log_message = f"Error:{e}"
-            # print(log_message)
+            print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
         
         # with shared_resource_lock:

@@ -25,7 +25,7 @@ KAFKA_TOPIC_REPLICATION_FACTOR = 1
 SUBDIRECTORY_HASH_LENGTH = 3
 OLD_PACKAGE_VERSIONS_LIMIT = 3 #determines max how many package versions to keep
 
-# Create a metric to track time spent and requests made.
+# Create prmethius metrics to track time spent and requests made.
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
 npmUpdateCounter = Counter('npmmirror_npm_update_counter', 'number of npm updates processed')
 downloadQueueLength = Gauge('npmmirror_download_queue_length', 'length of the download queue')
@@ -45,8 +45,9 @@ topic1 = NewTopic('downloaded_in_local', num_partitions=KAFKA_TOPIC_NUM_PARTITIO
 topic2 = NewTopic('moved_to_remote', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
 topic3 = NewTopic('added_to_db', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
 topic4 = NewTopic('run_logs', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
+topic5 = NewTopic('skipped_changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
 
-fs = ac.create_topics([topic1, topic2, topic3, topic4])
+fs = ac.create_topics([topic1, topic2, topic3, topic4, topic5])
 
 # Initialize Kafka producer
 kafka_producer = Producer({"bootstrap.servers": "localhost:9092"})
@@ -344,6 +345,8 @@ def process_change(db, change):
         store_change_details(change, db, zip_path)
         # add to recorded in db queue
         kafka_producer.produce("added_to_db", value=str(change['seq']))
+    else:
+        kafka_producer.produce("skipped_changes", value=str(change['seq']))
     
     npmUpdateCounter.inc()
 
@@ -419,9 +422,11 @@ def process_changes_async(db):
             print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
         except Exception as e:
-            log_message = f"Error:{e}"
+            log_message = f"Error:{e}, skipped change"
             print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
+            kafka_producer.produce("skipped_changes", value=str(change['seq']))
+            
         
         # with shared_resource_lock:
         kafka_consumer.commit(msg)

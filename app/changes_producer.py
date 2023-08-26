@@ -22,8 +22,9 @@ streaming_finished = False
 #creating kafka admin client and topics
 ac = AdminClient({"bootstrap.servers": "localhost:9092"})
  
-topic = NewTopic('npm-changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
-fs = ac.create_topics([topic])
+topic1 = NewTopic('npm-changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
+topic2 = NewTopic('skipped_changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
+fs = ac.create_topics([topic1, topic2])
 
 # Initialize Kafka producer
 kafka_producer = Producer({"bootstrap.servers": "localhost:9092"})
@@ -49,6 +50,8 @@ def stream_npm_updates():
                     print("Message size too large. Unable to produce message.")
                 else:
                     print("Error:", e)
+                change = json.loads(line)
+                kafka_producer.produce("skipped_changes", value=str(change['seq']))
             # except KafkaError as e:
             #     if e.args[0].code() == KafkaError.MSG_SIZE_TOO_LARGE:
             #         print("Message size too large. Unable to produce message.")

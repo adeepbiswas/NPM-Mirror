@@ -22,6 +22,8 @@ DB_PASSWORD = 'opensesame123'
 DATABASE_NAME = 'test_run_9'
 KAFKA_TOPIC_NUM_PARTITIONS = 4
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
+SUBDIRECTORY_HASH_LENGTH = 3
+OLD_PACKAGE_VERSIONS_LIMIT = 3 #determines max how many package versions to keep
 
 # Create a metric to track time spent and requests made.
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
@@ -86,8 +88,8 @@ def create_directory_structure(package_name):
         os.mkdir(LOCAL_PACKAGE_DIR)
 
     # Create subdirectories based on first 3 characters of the package name to add heirarchy
-    if len(package_name) >= 3:
-        first_char = package_name[0:3].upper()
+    if len(package_name) >= SUBDIRECTORY_HASH_LENGTH:
+        first_char = package_name[0:SUBDIRECTORY_HASH_LENGTH].upper()
     else:
         first_char = package_name[0].upper()
     # first_char = package_name[0].upper()
@@ -182,9 +184,29 @@ def download_document_and_package(change, package_name):
             return doc_path, tarball_path
     return None, None
 
+def get_zip_creation_time(zip_filename):
+    # Get the creation time of the zip file
+    zip_creation_time = os.path.getctime(zip_filename)
+    return zip_creation_time
+
+#deletes the oldest zip version if there are already 3 or more versions present
+def delete_oldest_zip(directory):
+    zip_files = [file for file in os.listdir(directory) if file.lower().endswith('.zip')]
+
+    if len(zip_files) >= OLD_PACKAGE_VERSIONS_LIMIT:
+        zip_file_times = [(zip_file, get_zip_creation_time(os.path.join(directory, zip_file))) for zip_file in zip_files]
+        oldest_zip = min(zip_file_times, key=lambda x: x[1])[0]
+        
+        oldest_zip_path = os.path.join(directory, oldest_zip)
+        os.remove(oldest_zip_path)
+        log_message = f"Deleted the oldest zip file: {oldest_zip}"
+        print(log_message)
+        kafka_producer.produce("run_logs", value=log_message)
+
 # Function to compress the downloaded JSON and tarball into a zip file and store it in remote directory
 def compress_files(raw_package_name, package_name, revision_id, doc_path, tarball_path):
     package_dir = create_directory_structure(raw_package_name)
+    delete_oldest_zip(package_dir)
     compressed_filename = f"{package_name}_{revision_id}.zip"
     zip_path = os.path.join(package_dir, compressed_filename)
     

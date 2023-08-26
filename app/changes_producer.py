@@ -24,7 +24,8 @@ ac = AdminClient({"bootstrap.servers": "localhost:9092"})
  
 topic1 = NewTopic('npm-changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
 topic2 = NewTopic('skipped_changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
-fs = ac.create_topics([topic1, topic2])
+topic3 = NewTopic('run_logs', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
+fs = ac.create_topics([topic1, topic2, topic3])
 
 # Initialize Kafka producer
 kafka_producer = Producer({"bootstrap.servers": "localhost:9092"})
@@ -45,12 +46,16 @@ def stream_npm_updates():
                 kafka_producer.flush()
                 print("Change sent to Kafka stream")
             except Exception as e:
+                change = json.loads(line)
                 if "Message size too large" in str(e) or \
                    "MSG_SIZE_TOO_LARGE" in str(e):
-                    print("Message size too large. Unable to produce message.")
+                    log_message = "Seq ID - {change['seq']} - Message size too large. Unable to produce message."
+                    print(log_message)
+                    kafka_producer.produce("run_logs", value=log_message)
                 else:
-                    print("Error:", e)
-                change = json.loads(line)
+                    log_message = f"Seq ID - {change['seq']} - Error:{e}, change skipped."
+                    print(log_message)
+                    kafka_producer.produce("run_logs", value=log_message)
                 kafka_producer.produce("skipped_changes", value=str(change['seq']))
             # except KafkaError as e:
             #     if e.args[0].code() == KafkaError.MSG_SIZE_TOO_LARGE:

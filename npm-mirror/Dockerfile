@@ -16,6 +16,9 @@ RUN pip install -r requirements.txt
 # Copy the rest of the application code into the container
 COPY ./app ./app
 
+# Copy the rest of the application code into the container
+COPY ./dbdata ./dbdata
+
 # Copy the shell script
 COPY run_scripts.sh .
 

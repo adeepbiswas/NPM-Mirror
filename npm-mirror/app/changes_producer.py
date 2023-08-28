@@ -21,7 +21,7 @@ SEQ_ID_FILE_NAME = "latest_seq_ID.txt"
 streaming_finished = False
 
 #creating kafka admin client and topics
-ac = AdminClient({"bootstrap.servers": "localhost:9092"})
+ac = AdminClient({"bootstrap.servers": "broker-npm:9092"})
  
 topic1 = NewTopic('npm-changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
 topic2 = NewTopic('skipped_changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
@@ -29,7 +29,7 @@ topic3 = NewTopic('run_logs', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replica
 fs = ac.create_topics([topic1, topic2, topic3])
 
 # Initialize Kafka producer
-kafka_producer = Producer({"bootstrap.servers": "localhost:9092"})
+kafka_producer = Producer({"bootstrap.servers": "broker-npm:9092"})
 
 #stores the last seq ID read from the NPM API 
 def write_latest_seq_id_to_file(filename, variable):

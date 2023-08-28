@@ -10,6 +10,8 @@ services:
       - COUCHDB_PASSWORD=opensesame123
     volumes:
       - ./dbdata:/opt/couchdb/data
+    networks:
+      - npm-network
 
   zookeeper-npm:
     image: confluentinc/cp-zookeeper:7.3.0
@@ -18,6 +20,8 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - npm-network
 
   broker-npm:
     image: confluentinc/cp-kafka:7.3.0
@@ -30,20 +34,24 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-npm:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker-npm:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,PLAINTEXT_INTERNAL://broker-npm:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 5242880
+    networks:
+      - npm-network
 
-  # kafka-exporter:
-  #   # image: danielqsj/kafka-exporter:latest
-  #   image: docker.io/alesj/kafka_exporter:fork2
-  #   container_name: kafka-exporter
-  #   ports:
-  #     - "9308:9308"  # Expose Kafka Exporter's metrics endpoint
-  #   environment:
-  #     KAFKA_BROKER: "localhost:9092"  # Address of your Kafka broker
+  kafka-exporter-npm:
+    # image: danielqsj/kafka-exporter:latest
+    image: docker.io/alesj/kafka_exporter:fork2
+    container_name: kafka-exporter-npm
+    ports:
+      - "9308:9308"  # Expose Kafka Exporter's metrics endpoint
+    depends_on:
+      - broker-npm
+    environment:
+      KAFKA_BROKER: "broker-npm:9092"  # Address of your Kafka broker
 
   # kafka-ui:
   #   container_name: kafka-ui
@@ -65,12 +73,16 @@ services:
       - "9091:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - npm-network
 
   grafana:
     hostname: grafana
     image: grafana/grafana
     ports:
       - 3001:3000
+    networks:
+      - npm-network
 
   npm-mirror:
     image: npm-mirror
@@ -78,3 +90,9 @@ services:
       - zookeeper-npm
       - broker-npm
       - couchserver
+    networks:
+      - npm-network
+
+networks:
+  npm-network:
+    driver: bridge

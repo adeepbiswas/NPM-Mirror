@@ -20,8 +20,11 @@ SEQ_ID_FILE_NAME = "latest_seq_ID.txt"
 # Flag to indicate that the streaming has finished
 streaming_finished = False
 
+print("tryong to connect to kafka")
+
 #creating kafka admin client and topics
 ac = AdminClient({"bootstrap.servers": "broker-npm:9092"})
+print("kafka connection successful")
  
 topic1 = NewTopic('npm-changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
 topic2 = NewTopic('skipped_changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
@@ -71,7 +74,7 @@ def stream_npm_updates():
             except Exception as e:
                 if "Message size too large" in str(e) or \
                    "MSG_SIZE_TOO_LARGE" in str(e):
-                    log_message = "Seq ID - {change['seq']} - Message size too large. Unable to produce message."
+                    log_message = f"Seq ID - {change['seq']} - Message size too large. Unable to produce message."
                     print(log_message)
                     kafka_producer.produce("run_logs", value=log_message)
                 else:

@@ -27,7 +27,8 @@ services:
       KAFKA_MESSAGE_MAX_BYTES: 5242880
 
   kafka-exporter:
-    image: danielqsj/kafka-exporter:latest
+    # image: danielqsj/kafka-exporter:latest
+    image: docker.io/alesj/kafka_exporter:fork2
     container_name: kafka-exporter
     ports:
       - "9308:9308"  # Expose Kafka Exporter's metrics endpoint

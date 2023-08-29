@@ -33,13 +33,13 @@ lastSeq = Gauge('npmmirror_last_seq_processed', 'value of the last seq processed
 newestSeq = Gauge('npmmirror_newest_seq', 'value of the newest seq on the server')
 
 # Establish Couchdb server connection
-server = couchdb.Server('http://{user}:{password}@localhost:5984/'.format(user=DB_USER, password=DB_PASSWORD))
+server = couchdb.Server('http://{user}:{password}@couchserver:5984/'.format(user=DB_USER, password=DB_PASSWORD))
 
 # Initialize a lock for accessing shared resources
 shared_resource_lock = threading.Lock()
 
 #creating kafka admin client and topics
-ac = AdminClient({"bootstrap.servers": "localhost:9092"})
+ac = AdminClient({"bootstrap.servers": "broker-npm:9092"})
  
 topic1 = NewTopic('downloaded_in_local', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
 topic2 = NewTopic('moved_to_remote', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, replication_factor=KAFKA_TOPIC_REPLICATION_FACTOR)
@@ -50,10 +50,10 @@ topic5 = NewTopic('skipped_changes', num_partitions=KAFKA_TOPIC_NUM_PARTITIONS, 
 fs = ac.create_topics([topic1, topic2, topic3, topic4, topic5])
 
 # Initialize Kafka producer
-kafka_producer = Producer({"bootstrap.servers": "localhost:9092"})
+kafka_producer = Producer({"bootstrap.servers": "broker-npm:9092"})
 
 kafka_consumer = Consumer({
-    "bootstrap.servers": "localhost:9092",
+    "bootstrap.servers": "broker-npm:9092",
     "group.id": "npm-update-group",
     "auto.offset.reset": "earliest",
     "max.partition.fetch.bytes": 5242880  # 5 MB in bytes

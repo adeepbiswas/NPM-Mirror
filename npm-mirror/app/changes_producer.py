@@ -20,7 +20,7 @@ SEQ_ID_FILE_NAME = "latest_seq_ID.txt"
 # Flag to indicate that the streaming has finished
 streaming_finished = False
 
-print("tryong to connect to kafka")
+print("Trying to connect to kafka")
 
 #creating kafka admin client and topics
 ac = AdminClient({"bootstrap.servers": "broker-npm:9092"})

@@ -2,6 +2,7 @@ version: '3'
 services:
   couchserver:
     image: couchdb
+    hostname: couchserver
     restart: always
     ports: 
       - "5984:5984"
@@ -69,6 +70,7 @@ services:
 
   prometheus:
     image: prom/prometheus
+    hostname: prometheus
     ports:
       - "9091:9090"
     volumes:
@@ -86,6 +88,7 @@ services:
 
   npm-mirror:
     image: npm-mirror
+    hostname: npm-mirror
     depends_on:
       - zookeeper-npm
       - broker-npm

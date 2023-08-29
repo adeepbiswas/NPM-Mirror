@@ -17,3 +17,4 @@ packages
 temp_packages
 .parallel
 app/__pycache__
+npm-mirror/dbdata

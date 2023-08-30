@@ -1,0 +1,101 @@
+version: '3'
+services:
+  couchserver:
+    image: couchdb
+    hostname: couchserver
+    restart: always
+    ports: 
+      - "5984:5984"
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=opensesame123
+    volumes:
+      - ./dbdata:/opt/couchdb/data
+    networks:
+      - npm-network
+
+  zookeeper-npm:
+    image: confluentinc/cp-zookeeper:7.3.0
+    hostname: zookeeper-npm
+    container_name: zookeeper-npm
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - npm-network
+
+  broker-npm:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: broker-npm
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper-npm
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-npm:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,PLAINTEXT_INTERNAL://broker-npm:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_MESSAGE_MAX_BYTES: 5242880
+    networks:
+      - npm-network
+
+  kafka-exporter-npm:
+    # image: danielqsj/kafka-exporter:latest
+    image: docker.io/alesj/kafka_exporter:fork2
+    container_name: kafka-exporter-npm
+    ports:
+      - "9308:9308"  # Expose Kafka Exporter's metrics endpoint
+    depends_on:
+      - broker-npm
+    environment:
+      KAFKA_BROKER: "broker-npm:9092"  # Address of your Kafka broker
+
+  # kafka-ui:
+  #   container_name: kafka-ui
+  #   image: provectuslabs/kafka-ui:latest
+  #   ports:
+  #     - 8081:8080
+  #   environment:
+  #     DYNAMIC_CONFIG_ENABLED: 'true'
+  #     KAFKA_CLUSTERS_0_NAME: npm-cluster
+  #     KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:29092
+  #     KAFKA_CLUSTERS_0_METRICS_PORT: 11001
+  #     KAFKA_CLUSTERS_0_METRICS_TYPE: PROMETHEUS
+  #   # volumes:
+  #   #   - ./config.yml:/etc/kafkaui/dynamic_config.yaml
+
+  prometheus:
+    image: prom/prometheus
+    hostname: prometheus
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - npm-network
+
+  grafana:
+    hostname: grafana
+    image: grafana/grafana
+    ports:
+      - 3001:3000
+    networks:
+      - npm-network
+
+  npm-mirror:
+    image: npm-mirror
+    hostname: npm-mirror
+    depends_on:
+      - zookeeper-npm
+      - broker-npm
+      - couchserver
+    networks:
+      - npm-network
+
+networks:
+  npm-network:
+    driver: bridge

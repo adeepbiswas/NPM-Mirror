@@ -10,13 +10,14 @@ import queue
 import threading
 import concurrent.futures
 from prometheus_client import start_http_server, Summary, Counter, Gauge
+from confluent_kafka import Consumer, Producer, KafkaError
 
 LOCAL_PACKAGE_DIR = "temp_packages"
 REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 5e+6
 DB_USER = 'admin'
 DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'test_run_4'
+DATABASE_NAME = 'test_run_5'
 
 # Create a metric to track time spent and requests made.
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
@@ -33,6 +34,20 @@ change_queue = queue.Queue()
 
 # Flag to indicate that the streaming has finished
 streaming_finished = False
+
+# Initialize a lock for accessing shared resources
+shared_resource_lock = threading.Lock()
+
+# # Initialize Kafka producer and consumer
+# kafka_producer = Producer({"bootstrap.servers": "localhost:9092"})
+
+kafka_consumer = Consumer({
+    "bootstrap.servers": "localhost:9092",
+    "group.id": "npm-update-group",
+    "auto.offset.reset": "earliest",
+    "max.partition.fetch.bytes": 5242880  # 5 MB in bytes
+})
+kafka_consumer.subscribe(["npm-changes"])
 
 # Function to create or connect to our own CouchDB database
 def create_or_connect_db(server, database_name):
@@ -264,42 +279,96 @@ def process_change(change):
     
     npmUpdateCounter.inc()
 
-# Function to process changes from the queue asynchronously using a thread pool
-def process_changes_async(db, num_threads=4):  # Pass 'db' as an argument and set the number of threads
+############################################
+
+# Multithreading asynchronous processing without kafka and locks
+
+# # Function to process changes from the queue asynchronously using a thread pool
+# def process_changes_async(db, num_threads=4):  # Pass 'db' as an argument and set the number of threads
+#     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
+#         while True:
+#             try:
+#                 queue_size = change_queue.qsize()
+#                 print(f"Queue size: {queue_size}")
+#                 change = change_queue.get(timeout=1)  # Wait for 1 second for a change to appear in the queue
+#                 downloadQueueLength.set(change_queue.qsize())
+#             except queue.Empty:
+#                 if streaming_finished:  # Exit the loop if streaming has finished and the queue is empty
+#                     break
+#                 else:
+#                     continue
+#             executor.submit(process_change, change)
+#             change_queue.task_done()
+
+# # Main function that reads changes from the NPM Registry and adds them to the queue
+# def stream_npm_updates():
+#     # access the changes API from Replicate (Public DB Replica for NPM Registry)
+#     url = 'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since=25318031' #&limit=20'
+#     response = requests.get(url, stream=True)
+#     if response.status_code != 200:
+#         print(f'Error connecting to the CouchDB stream: {response.status_code}')
+#         return
+
+#     # counter for number of changes read from the stream
+#     i = 0
+
+#     for line in response.iter_lines():
+#         i += 1
+#         if line:
+#             change = json.loads(line)
+#             change_queue.put(change)  # Put the change into the queue for processing
+#             print("change put in queue")
+#         # break
+
+############################################
+
+# Function to process changes from Kafka stream asynchronously using a thread pool
+def process_changes_async(db, num_threads=4):  
+    print("hello1")
     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
         while True:
-            try:
-                queue_size = change_queue.qsize()
-                print(f"Queue size: {queue_size}")
-                change = change_queue.get(timeout=1)  # Wait for 1 second for a change to appear in the queue
-                downloadQueueLength.set(change_queue.qsize())
-            except queue.Empty:
-                if streaming_finished:  # Exit the loop if streaming has finished and the queue is empty
+            print("hello2")
+            msg = kafka_consumer.poll(100.0)  # Poll Kafka stream for messages
+            
+            if msg is None:  # Continue if no message received
+                if streaming_finished:  # Exit the loop if streaming has finished
                     break
-                else:
-                    continue
-            executor.submit(process_change, change)
-            change_queue.task_done()
-
-# Main function that reads changes from the NPM Registry and adds them to the queue
-def stream_npm_updates():
-    # access the changes API from Replicate (Public DB Replica for NPM Registry)
-    url = 'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since=25318031' #&limit=20'
-    response = requests.get(url, stream=True)
-    if response.status_code != 200:
-        print(f'Error connecting to the CouchDB stream: {response.status_code}')
-        return
-
-    # counter for number of changes read from the stream
-    i = 0
-
-    for line in response.iter_lines():
-        i += 1
-        if line:
-            change = json.loads(line)
-            change_queue.put(change)  # Put the change into the queue for processing
-            print("change put in queue")
-        # break
+                continue
+            
+            change = json.loads(msg.value())
+            
+            with shared_resource_lock:
+                downloadQueueLength.set(kafka_consumer.assignment()[0].high-watermark)
+            
+            executor.submit(process_change, db, change)
+            
+            with shared_resource_lock:
+                kafka_consumer.commit(msg)
+                
+# # Main function that reads changes from Kafka stream and adds them to the queue
+# def stream_npm_updates():
+#     url = 'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since=25318031'
+#     response = requests.get(url, stream=True)
+    
+#     if response.status_code != 200:
+#         print(f'Error connecting to the CouchDB stream: {response.status_code}')
+#         return
+    
+#     for line in response.iter_lines():
+#         if line:
+#             try:
+#                 kafka_producer.produce("npm-changes", value=line)
+#                 kafka_producer.flush()
+#                 print("Change sent to Kafka stream")
+#             except Exception as e:
+#                 if "Message size too large" in str(e) or \
+#                    "MSG_SIZE_TOO_LARGE" in str(e):
+#                     print("Message size too large. Unable to produce message.")
+#                 else:
+#                     print("Error:", e)
+#             # except KafkaError as e:
+#             #     if e.args[0].code() == KafkaError.MSG_SIZE_TOO_LARGE:
+#             #         print("Message size too large. Unable to produce message.")
 
 if __name__ == '__main__':
     # Start up the server to expose the metrics.
@@ -313,11 +382,12 @@ if __name__ == '__main__':
     async_process_thread.daemon = True
     async_process_thread.start()
 
-    # Start streaming and processing changes
-    stream_npm_updates()
+    # # Start streaming and processing changes
+    # stream_npm_updates()
 
-    # Indicate that streaming has finished
-    streaming_finished = True
+    # # Indicate that streaming has finished
+    # streaming_finished = True
+    # print(streaming_finished)
 
     # Wait for the queue to be empty, meaning all changes have been processed
     change_queue.join()

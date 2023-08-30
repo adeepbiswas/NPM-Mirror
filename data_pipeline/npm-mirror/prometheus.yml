@@ -3,7 +3,8 @@ global:
   evaluation_interval: 30s # time between each evaluation of Prometheus' alerting rules
 
 scrape_configs:
-  - job_name: npm-mirror    # your project name
+  - job_name: npm-mirror    
     static_configs:
       - targets:
-        - localhost:8000
+        - localhost:9092
+        - kafka-exporter:9308  

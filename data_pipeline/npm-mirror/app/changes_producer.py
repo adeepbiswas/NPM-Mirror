@@ -87,6 +87,9 @@ def stream_npm_updates():
             #         print("Message size too large. Unable to produce message.")
             
 if __name__ == '__main__':
+    # Start up the server to expose the metrics.
+    # start_http_server(8000)
+    
     stream_npm_updates()
     streaming_finished = True
     print("Streaming finished - ", streaming_finished)

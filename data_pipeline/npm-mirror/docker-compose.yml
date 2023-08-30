@@ -28,45 +28,57 @@ services:
     image: confluentinc/cp-kafka:7.3.0
     container_name: broker-npm
     ports:
-      - "9092:9092"
+      - 9092:9092
+      # - 29092:29092 ####
+      # - 29103:29101
     depends_on:
       - zookeeper-npm
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-npm:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,PLAINTEXT_INTERNAL://broker-npm:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,PLAINTEXT_INTERNAL://broker-npm:9092 ####
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 5242880
+      # EXTRA_ARGS: -javaagent:/usr/share/jmx_exporter/jmx_prometheus_javaagent-0.17.0.jar=29101:/usr/share/jmx_exporter/kafka-broker.yaml  
     networks:
       - npm-network
+    # volumes:      
+    #   - ./jmx-exporter:/usr/share/jmx_exporter/      
+    #   - kafka-jmx-volume:/jmx-exporter
 
   kafka-exporter-npm:
     # image: danielqsj/kafka-exporter:latest
     image: docker.io/alesj/kafka_exporter:fork2
     container_name: kafka-exporter-npm
     ports:
-      - "9308:9308"  # Expose Kafka Exporter's metrics endpoint
+      - 9308:9308  # Expose Kafka Exporter's metrics endpoint
     depends_on:
       - broker-npm
     environment:
       KAFKA_BROKER: "broker-npm:9092"  # Address of your Kafka broker
+    networks:
+      - npm-network
 
-  # kafka-ui:
-  #   container_name: kafka-ui
-  #   image: provectuslabs/kafka-ui:latest
-  #   ports:
-  #     - 8081:8080
-  #   environment:
-  #     DYNAMIC_CONFIG_ENABLED: 'true'
-  #     KAFKA_CLUSTERS_0_NAME: npm-cluster
-  #     KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:29092
-  #     KAFKA_CLUSTERS_0_METRICS_PORT: 11001
-  #     KAFKA_CLUSTERS_0_METRICS_TYPE: PROMETHEUS
-  #   # volumes:
-  #   #   - ./config.yml:/etc/kafkaui/dynamic_config.yaml
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 8081:8080
+    depends_on:
+      - broker-npm
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+      KAFKA_CLUSTERS_0_NAME: npm-cluster
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker-npm:9092
+      KAFKA_CLUSTERS_0_METRICS_PORT: 11001
+      KAFKA_CLUSTERS_0_METRICS_TYPE: PROMETHEUS
+    networks:
+      - npm-network
+    # volumes:
+    #   - ./config.yml:/etc/kafkaui/dynamic_config.yaml
 
   prometheus:
     image: prom/prometheus
@@ -96,6 +108,8 @@ services:
     networks:
       - npm-network
 
+# volumes:  
+#   kafka-jmx-volume:
 networks:
   npm-network:
     driver: bridge

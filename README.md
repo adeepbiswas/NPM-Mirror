@@ -71,9 +71,9 @@ docker-compose rm broker-npm
 
 # View / Monitor Running Containers
 
-View Database UI- http://127.0.0.1:5984/_utils/
-View Kafka-ui - http://localhost:8081/
-View Prometheus logs - http://localhost:9091/
-View Grafana Dashboard- http://localhost:3001/
+  1. View Database UI- http://127.0.0.1:5984/_utils/
+  2. View Kafka-ui - http://localhost:8081/
+  3. View Prometheus logs - http://localhost:9091/
+  4. View Grafana Dashboard- http://localhost:3001/
 
 Note: Appropriate port forwarding from the server's (VM's) port to the local computer port will be needed to view these on browser

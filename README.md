@@ -62,6 +62,7 @@ docker-compose logs <container_name>
 To delete CouchDB data- 
 ```shell
 sudo rm -rf dbdata
+mkdir dbdata
 ```
 
 To reset kafka broker- 

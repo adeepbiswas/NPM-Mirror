@@ -47,9 +47,9 @@ To run the containers-
 docker-compose up
 ```
 
-To enter terminal for running containers- 
+To enter terminal for running container- 
 ```shell
-docker-compose exec -it <container_name> /bin/bash
+docker exec -it npm-mirror_npm-mirror_1 /bin/bash
 ```
 
 To view container logs- 

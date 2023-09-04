@@ -107,6 +107,8 @@ services:
       - couchserver
     networks:
       - npm-network
+    volumes:
+      - ./../packages:/npm-mirror/packages
 
 # volumes:  
 #   kafka-jmx-volume:

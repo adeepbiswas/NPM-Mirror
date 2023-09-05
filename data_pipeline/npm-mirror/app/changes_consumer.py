@@ -265,72 +265,6 @@ def store_change_details(change, db, zip_path):
     print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
     kafka_producer.flush()
-    
-############################################
-
-# Main function that reads changes from the NPM Registry and processes them directly in a single thread
-# corresponding files and making an entry for the change into our database
-# def stream_npm_updates():
-#     # access the changes API from Replicate (Public DB Replica for NPM Registry)
-#     url = 'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since=25318031' #&limit=20'
-#     response = requests.get(url, stream=True)
-#     if response.status_code != 200:
-#         print(f'Error connecting to the CouchDB stream: {response.status_code}')
-#         return
-
-#     # Create or connect to our database
-#     db = create_or_connect_db(server, DATABASE_NAME)
-
-#     # counter for number of changes read from the stream
-#     i = 0
-
-#     for line in response.iter_lines():
-#         i += 1
-#         # print(i)
-#         # print(line)
-#         if line:
-#             change = json.loads(line)
-#             raw_package_name = change['id']
-#             print("Change sequence ID: ", change['seq'])
-#             print("Raw package name: ", raw_package_name)
-#             if "/" in raw_package_name:
-#                 segments = raw_package_name.split("/")
-#                 package_name = segments[-1]
-#             else:
-#                 package_name = raw_package_name
-            
-#             doc_path, tarball_path = download_document_and_package(change, package_name)
-            
-#             if doc_path:
-#                 zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
-#                 store_change_details(change, db, zip_path)
-        # break
-
-# stream_npm_updates()
-
-############################################
-
-# # Function to process changes from the queue asynchronously in a single thread
-# def process_changes_async(db):  # Pass 'db' as an argument
-#     while True:
-#         change = change_queue.get()
-#         raw_package_name = change['id']
-#         print("Change sequence ID: ", change['seq'])
-#         print("Raw package name: ", raw_package_name)
-#         if "/" in raw_package_name:
-#             segments = raw_package_name.split("/")
-#             package_name = segments[-1]
-#         else:
-#             package_name = raw_package_name
-        
-#         doc_path, tarball_path = download_document_and_package(change, package_name)
-        
-#         if doc_path:
-#             zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
-#             store_change_details(change, db, zip_path)
-#         change_queue.task_done()
-
-############################################
 
 # Function to process a single change
 @REQUEST_TIME.time()
@@ -373,49 +307,6 @@ def process_change(db, change):
     
     npmUpdateCounter.inc()
 
-############################################
-
-# Multithreading asynchronous processing without kafka and locks
-
-# # Function to process changes from the queue asynchronously using a thread pool
-# def process_changes_async(db, num_threads=4):  # Pass 'db' as an argument and set the number of threads
-#     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
-#         while True:
-#             try:
-#                 queue_size = change_queue.qsize()
-#                 print(f"Queue size: {queue_size}")
-#                 change = change_queue.get(timeout=1)  # Wait for 1 second for a change to appear in the queue
-#                 downloadQueueLength.set(change_queue.qsize())
-#             except queue.Empty:
-#                 if streaming_finished:  # Exit the loop if streaming has finished and the queue is empty
-#                     break
-#                 else:
-#                     continue
-#             executor.submit(process_change, change)
-#             change_queue.task_done()
-
-# # Main function that reads changes from the NPM Registry and adds them to the queue
-# def stream_npm_updates():
-#     # access the changes API from Replicate (Public DB Replica for NPM Registry)
-#     url = 'https://replicate.npmjs.com/_changes?include_docs=true&feed=continuous&heartbeat=10000&style=all_docs&conflicts=true&since=25318031' #&limit=20'
-#     response = requests.get(url, stream=True)
-#     if response.status_code != 200:
-#         print(f'Error connecting to the CouchDB stream: {response.status_code}')
-#         return
-
-#     # counter for number of changes read from the stream
-#     i = 0
-
-#     for line in response.iter_lines():
-#         i += 1
-#         if line:
-#             change = json.loads(line)
-#             change_queue.put(change)  # Put the change into the queue for processing
-#             print("change put in queue")
-#         # break
-
-############################################
-
 # Function to process changes from Kafka stream asynchronously using a thread pool
 def process_changes_async(db):  
     # with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
@@ -454,8 +345,7 @@ def process_changes_async(db):
             kafka_producer.flush()
             kafka_producer.produce("skipped_changes", value=str(change['seq']))
             kafka_producer.flush()
-            
-        
+    
         # with shared_resource_lock:
         kafka_consumer.commit(msg)
 

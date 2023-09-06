@@ -34,8 +34,6 @@ load_dotenv(dotenv_path)
 # Access the variables
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
-print("xxx",DB_USER)
-print("xxx",DB_PASSWORD)
 
 # Create prmethius metrics to track time spent and requests made.
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')

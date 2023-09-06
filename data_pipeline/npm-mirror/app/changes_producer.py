@@ -13,7 +13,7 @@ from prometheus_client import start_http_server, Summary, Counter, Gauge
 from confluent_kafka import Consumer, Producer, KafkaError
 from confluent_kafka.admin import AdminClient, NewTopic
 
-KAFKA_TOPIC_NUM_PARTITIONS = 4
+KAFKA_TOPIC_NUM_PARTITIONS = 12
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
 SEQ_ID_FILE_NAME = "./app/latest_seq_ID.txt"
 

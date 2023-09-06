@@ -17,11 +17,11 @@ from dotenv import load_dotenv
 
 LOCAL_PACKAGE_DIR = "temp_packages"
 REMOTE_PACKAGE_DIR = "packages"
-MAX_SIZE = 5e+6
+MAX_SIZE = 10e+6
 # DB_USER = 'admin'
 # DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'test_run_11'
-KAFKA_TOPIC_NUM_PARTITIONS = 4
+DATABASE_NAME = 'npm-mirror'
+KAFKA_TOPIC_NUM_PARTITIONS = 12
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
 SUBDIRECTORY_HASH_LENGTH = 3
 OLD_PACKAGE_VERSIONS_LIMIT = 3 #determines max how many package versions to keep

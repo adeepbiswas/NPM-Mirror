@@ -108,7 +108,9 @@ services:
     networks:
       - npm-network
     volumes:
-      - ../packages:/packages
+      # - /NPM/packages:/packages
+      - ../../../../../../NPM/packages:/npm-mirror/packages
+      # - ../packages:/packages
 
 # volumes:  
 #   kafka-jmx-volume:

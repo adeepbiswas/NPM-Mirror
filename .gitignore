@@ -20,3 +20,5 @@ app/__pycache__
 npm-mirror/dbdata
 .docker
 data_pipeline/npm-mirror/dbdata
+data_pipeline/packages
+data_pipeline/npm-mirror/.env

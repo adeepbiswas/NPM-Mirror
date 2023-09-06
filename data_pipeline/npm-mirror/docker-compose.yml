@@ -7,8 +7,8 @@ services:
     ports: 
       - "5984:5984"
     environment:
-      - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=opensesame123
+      - COUCHDB_USER=${DB_USER} #admin
+      - COUCHDB_PASSWORD=${DB_PASSWORD} #opensesame123
     volumes:
       - ./dbdata:/opt/couchdb/data
     networks:
@@ -108,7 +108,7 @@ services:
     networks:
       - npm-network
     volumes:
-      - ../packages:packages
+      - ../packages:/packages
 
 # volumes:  
 #   kafka-jmx-volume:

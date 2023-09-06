@@ -13,17 +13,29 @@ from prometheus_client import start_http_server, Summary, Counter, Gauge
 from confluent_kafka import Consumer, Producer, KafkaError
 from changes_producer import streaming_finished
 from confluent_kafka.admin import AdminClient, NewTopic
+from dotenv import load_dotenv
 
 LOCAL_PACKAGE_DIR = "temp_packages"
 REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 5e+6
-DB_USER = 'admin'
-DB_PASSWORD = 'opensesame123'
-DATABASE_NAME = 'test_run_10'
+# DB_USER = 'admin'
+# DB_PASSWORD = 'opensesame123'
+DATABASE_NAME = 'test_run_11'
 KAFKA_TOPIC_NUM_PARTITIONS = 4
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
 SUBDIRECTORY_HASH_LENGTH = 3
 OLD_PACKAGE_VERSIONS_LIMIT = 3 #determines max how many package versions to keep
+
+# Specify the path to the .env file in the main directory
+dotenv_path = '.env'
+# Load environment variables from the .env file
+load_dotenv(dotenv_path)
+
+# Access the variables
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+print("xxx",DB_USER)
+print("xxx",DB_PASSWORD)
 
 # Create prmethius metrics to track time spent and requests made.
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')

@@ -1,0 +1,3547 @@
+{
+   "repository" : {
+      "url" : "git+https://github.com/twilio/twilio-node.git",
+      "type" : "git"
+   },
+   "license" : "MIT",
+   "versions" : {
+      "1.0.1" : {
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.0.1.tgz",
+            "shasum" : "1a50cb5bfc707a999eb462f406b5dd65c933f843"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "repository" : {
+            "url" : "https://github.com/kwhinnery/twilio-node.git",
+            "type" : "git"
+         },
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "description" : "A Twilio helper library",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib",
+         "dependencies" : {
+            "request" : "2.x",
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x"
+         },
+         "contributors" : [
+            {
+               "email" : "carter@twilio.com",
+               "name" : "Carter Rabasa"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ],
+         "name" : "twilio",
+         "devDependencies" : {
+            "express" : "2.x",
+            "ejs" : "0.8.x",
+            "connect" : "2.x"
+         },
+         "_id" : "twilio@1.0.1",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "version" : "1.0.1",
+         "_npmVersion" : "1.1.66"
+      },
+      "2.2.1" : {
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "license" : "MIT",
+         "dist" : {
+            "shasum" : "28c0c34267b3d2f4b056b8133239e8f5fe68b246",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.2.1.tgz"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib",
+         "_from" : "./",
+         "_npmUser" : {
+            "name" : "dougblack",
+            "email" : "doug@dougblack.io"
+         },
+         "description" : "A Twilio helper library",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "devDependencies" : {
+            "jasmine-node" : "^1.14.5",
+            "express" : "3.x"
+         },
+         "dependencies" : {
+            "scmp" : "0.0.3",
+            "q" : "0.9.7",
+            "request" : "2.55.x",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "name" : "twilio",
+         "version" : "2.2.1",
+         "_npmVersion" : "1.4.7",
+         "_id" : "twilio@2.2.1",
+         "_shasum" : "28c0c34267b3d2f4b056b8133239e8f5fe68b246",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            }
+         ]
+      },
+      "0.0.1" : {
+         "repository" : {
+            "url" : "git://github.com/aaronblohowiak/Twilio-Node.git",
+            "type" : "git"
+         },
+         "homepage" : "http://github.com/aaronblohowiak/Twilio-Node",
+         "name" : "twilio",
+         "author" : {
+            "email" : "aaron.blohowiak@gmail.com",
+            "name" : "Aaron Blohowiak"
+         },
+         "_nodeVersion" : "v0.3.1-pre",
+         "dist" : {
+            "shasum" : "6d2694a51a92b9d1e7998d8eb12fb9890665b7a8",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.0.1.tgz"
+         },
+         "dependencies" : {
+            "libxmljs" : "0.4.1"
+         },
+         "_npmVersion" : "0.2.7-2",
+         "version" : "0.0.1",
+         "keywords" : [
+            "twilio",
+            "sms",
+            "api"
+         ],
+         "_nodeSupported" : true,
+         "description" : "Twilio API bindings for Node",
+         "engines" : {
+            "node" : "*"
+         },
+         "_id" : "twilio@0.0.1"
+      },
+      "1.11.1" : {
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "devDependencies" : {
+            "express" : "3.x",
+            "jasmine-node" : "*"
+         },
+         "dependencies" : {
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x",
+            "scmp" : "0.0.3",
+            "request" : "2.27.x",
+            "q" : "0.9.7"
+         },
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "name" : "twilio",
+         "version" : "1.11.1",
+         "_npmVersion" : "1.4.28",
+         "_id" : "twilio@1.11.1",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "70e603d1a61d345bd61c8ee39a277f9605188c56",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            }
+         ],
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "dist" : {
+            "shasum" : "70e603d1a61d345bd61c8ee39a277f9605188c56",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.11.1.tgz"
+         },
+         "gitHead" : "2095db4ff7ac8da238e66b8211067e58c8f9a742",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "description" : "A Twilio helper library"
+      },
+      "0.0.4" : {
+         "keywords" : [
+            "twilio",
+            "sms",
+            "api"
+         ],
+         "version" : "0.0.4",
+         "_npmVersion" : "0.2.7-2",
+         "main" : "./index",
+         "_id" : "twilio@0.0.4",
+         "engines" : {
+            "node" : "*"
+         },
+         "_nodeSupported" : true,
+         "description" : "Twilio API bindings for Node",
+         "homepage" : "http://github.com/aaronblohowiak/Twilio-Node",
+         "repository" : {
+            "url" : "git://github.com/aaronblohowiak/Twilio-Node.git",
+            "type" : "git"
+         },
+         "dependencies" : {
+            "restler-aaronblohowiak" : "0.0.2",
+            "libxmljs" : "0.4.1"
+         },
+         "dist" : {
+            "shasum" : "0c9bdcfe3ad43209fa9efd9449e71626b9684cf5",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.0.4.tgz"
+         },
+         "_nodeVersion" : "v0.3.1-pre",
+         "name" : "twilio",
+         "author" : {
+            "name" : "Aaron Blohowiak",
+            "email" : "aaron.blohowiak@gmail.com"
+         }
+      },
+      "2.4.0" : {
+         "dependencies" : {
+            "deprecate" : "^0.1.0",
+            "scmp" : "0.0.3",
+            "request" : "2.55.x",
+            "q" : "0.9.7",
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x",
+            "string.prototype.startswith" : "^0.2.0"
+         },
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "_nodeVersion" : "0.12.7",
+         "name" : "twilio",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "devDependencies" : {
+            "jasmine-node" : "^1.14.5",
+            "express" : "3.x"
+         },
+         "_id" : "twilio@2.4.0",
+         "_shasum" : "6432693945b61f62381968a4e960195ad1a0dcd9",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "version" : "2.4.0",
+         "_npmVersion" : "2.14.2",
+         "license" : "MIT",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.4.0.tgz",
+            "shasum" : "6432693945b61f62381968a4e960195ad1a0dcd9"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "gitHead" : "da8f12f0f70b6cad076f6a241c878a3e0b6a8f26",
+         "repository" : {
+            "url" : "git+https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "_npmUser" : {
+            "email" : "doug@dougblack.io",
+            "name" : "dougblack"
+         },
+         "description" : "A Twilio helper library",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_from" : ".",
+         "main" : "./lib"
+      },
+      "2.5.2" : {
+         "license" : "MIT",
+         "dist" : {
+            "shasum" : "1865a88756b375e873bf53faeedb5a80fcdc9fd6",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.5.2.tgz"
+         },
+         "gitHead" : "1f78e0771611950380c018db13b953ff398c2938",
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "repository" : {
+            "type" : "git",
+            "url" : "git+https://github.com/twilio/twilio-node.git"
+         },
+         "_npmUser" : {
+            "name" : "jingming",
+            "email" : "niu@jingming.ca"
+         },
+         "description" : "A Twilio helper library",
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "dependencies" : {
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x",
+            "string.prototype.startswith" : "^0.2.0",
+            "deprecate" : "^0.1.0",
+            "request" : "2.55.x",
+            "scmp" : "0.0.3",
+            "q" : "0.9.7"
+         },
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "_nodeVersion" : "0.12.7",
+         "name" : "twilio",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "devDependencies" : {
+            "express" : "3.x",
+            "jasmine-node" : "2.0.x"
+         },
+         "_id" : "twilio@2.5.2",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "1865a88756b375e873bf53faeedb5a80fcdc9fd6",
+         "maintainers" : [
+            {
+               "name" : "carlosdp",
+               "email" : "carlosdiazpadron@gmail.com"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            },
+            {
+               "email" : "niu@jingming.ca",
+               "name" : "jingming"
+            },
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "name" : "praser05",
+               "email" : "praser05@gmail.com"
+            },
+            {
+               "name" : "senthnpm",
+               "email" : "sramakrishnan@twilio.com"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "version" : "2.5.2",
+         "_npmVersion" : "3.3.9"
+      },
+      "0.0.0" : {
+         "dependencies" : {
+            "libxmljs" : "0.4.1"
+         },
+         "name" : "twilio",
+         "author" : {
+            "email" : "aaron.blohowiak@gmail.com",
+            "name" : "Aaron Blohowiak"
+         },
+         "_nodeVersion" : "v0.3.1-pre",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.0.0.tgz",
+            "shasum" : "a07b3f1e07de6049c298eda7ccb6c88d9f00483d"
+         },
+         "repository" : {
+            "type" : "git",
+            "url" : "git://github.com/aaronblohowiak/Twilio-Node.git"
+         },
+         "homepage" : "http://github.com/aaronblohowiak/Twilio-Node",
+         "_nodeSupported" : true,
+         "description" : "Twilio API bindings for Node",
+         "engines" : {
+            "node" : "*"
+         },
+         "_id" : "twilio@0.0.0",
+         "_npmVersion" : "0.2.7-2",
+         "version" : "0.0.0",
+         "keywords" : [
+            "twilio",
+            "sms",
+            "api"
+         ]
+      },
+      "1.7.0" : {
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "dist" : {
+            "shasum" : "d38d515564e604320f1213059c621aea8e0e852d",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.7.0.tgz"
+         },
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "_id" : "twilio@1.7.0",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "version" : "1.7.0",
+         "_npmVersion" : "1.4.3",
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "name" : "twilio",
+         "dependencies" : {
+            "scmp" : "0.0.3",
+            "request" : "2.27.x",
+            "q" : "0.9.7",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "devDependencies" : {
+            "jasmine-node" : "*",
+            "express" : "3.x"
+         },
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         }
+      },
+      "1.1.4" : {
+         "main" : "./lib",
+         "_from" : ".",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.1.4.tgz",
+            "shasum" : "1d28a855eb7d597c0f9b05d61a21d514d41498c0"
+         },
+         "_npmVersion" : "1.2.32",
+         "version" : "1.1.4",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@1.1.4",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "connect" : "2.x",
+            "ejs" : "0.8.x",
+            "express" : "2.x"
+         },
+         "dependencies" : {
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x",
+            "request" : "2.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "email" : "carter@twilio.com",
+               "name" : "Carter Rabasa"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ]
+      },
+      "0.6.1" : {
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "description" : "A Twilio helper library",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@0.6.1",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_npmVersion" : "1.1.66",
+         "version" : "0.6.1",
+         "name" : "twilio",
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "shasum" : "3a7744024f55a1507b482a376b6564f4cc61d689",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.6.1.tgz"
+         },
+         "contributors" : [
+            {
+               "name" : "Stephen Walters"
+            }
+         ],
+         "dependencies" : {
+            "underscore" : "1.x",
+            "request" : "2.x"
+         },
+         "repository" : {
+            "url" : "https://github.com/kwhinnery/twilio-node.git",
+            "type" : "git"
+         }
+      },
+      "1.11.0" : {
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "express" : "3.x",
+            "jasmine-node" : "*"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "dependencies" : {
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x",
+            "q" : "0.9.7",
+            "scmp" : "0.0.3",
+            "request" : "2.27.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "_npmVersion" : "1.4.28",
+         "version" : "1.11.0",
+         "_shasum" : "ac49109fbbf761d1b3efad5e49ae1bbb95135700",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_id" : "twilio@1.11.0",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            }
+         ],
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "gitHead" : "d0f5142c5d4049c426b7ef70a3507f0358c61393",
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.11.0.tgz",
+            "shasum" : "ac49109fbbf761d1b3efad5e49ae1bbb95135700"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         }
+      },
+      "0.6.2" : {
+         "_npmVersion" : "1.1.66",
+         "version" : "0.6.2",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "description" : "A Twilio helper library",
+         "_id" : "twilio@0.6.2",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "repository" : {
+            "url" : "https://github.com/kwhinnery/twilio-node.git",
+            "type" : "git"
+         },
+         "dependencies" : {
+            "request" : "2.x",
+            "underscore" : "1.x"
+         },
+         "name" : "twilio",
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.6.2.tgz",
+            "shasum" : "942c58adb9b484b933a951c1b30914a4f47187e0"
+         },
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "name" : "Stephen Walters"
+            }
+         ]
+      },
+      "0.7.0" : {
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "repository" : {
+            "url" : "https://github.com/kwhinnery/twilio-node.git",
+            "type" : "git"
+         },
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "shasum" : "7c85f2f1a88f5f2d47bfbd448c0e32f67da760be",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.7.0.tgz"
+         },
+         "_npmVersion" : "1.1.66",
+         "version" : "0.7.0",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@0.7.0",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ],
+         "devDependencies" : {
+            "express" : "2.x",
+            "ejs" : "0.8.x",
+            "connect" : "2.x"
+         },
+         "dependencies" : {
+            "request" : "2.x",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "email" : "stephenwalters@gmail.com",
+               "name" : "Stephen Walters"
+            }
+         ]
+      },
+      "2.9.0" : {
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "jingming",
+            "email" : "niu@jingming.ca"
+         },
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "license" : "MIT",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.9.0.tgz",
+            "shasum" : "9eea3da43b60b01f325eeb0de27fff3fce025568"
+         },
+         "gitHead" : "bbcf39f061b06171f4a8bd245b34593761d34307",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "repository" : {
+            "url" : "git+https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "_id" : "twilio@2.9.0",
+         "_shasum" : "9eea3da43b60b01f325eeb0de27fff3fce025568",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "maintainers" : [
+            {
+               "email" : "carlosdiazpadron@gmail.com",
+               "name" : "carlosdp"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            },
+            {
+               "email" : "niu@jingming.ca",
+               "name" : "jingming"
+            },
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "email" : "praser05@gmail.com",
+               "name" : "praser05"
+            },
+            {
+               "name" : "senthnpm",
+               "email" : "sramakrishnan@twilio.com"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "version" : "2.9.0",
+         "_npmVersion" : "3.3.9",
+         "dependencies" : {
+            "deprecate" : "^0.1.0",
+            "scmp" : "0.0.3",
+            "q" : "0.9.7",
+            "request" : "2.55.x",
+            "jwt-simple" : "0.1.x",
+            "jsonwebtoken" : "5.4.x",
+            "underscore" : "1.x",
+            "string.prototype.startswith" : "^0.2.0"
+         },
+         "_nodeVersion" : "0.12.7",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "name" : "twilio",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "devDependencies" : {
+            "express" : "3.x",
+            "jasmine-node" : "2.0.x"
+         }
+      },
+      "1.5.0" : {
+         "_npmVersion" : "1.3.5",
+         "version" : "1.5.0",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@1.5.0",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "express" : "3.x"
+         },
+         "dependencies" : {
+            "request" : "2.27.x",
+            "q" : "0.9.7",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "email" : "carter@twilio.com",
+               "name" : "Carter Rabasa"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ],
+         "main" : "./lib",
+         "_from" : ".",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "description" : "A Twilio helper library",
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.5.0.tgz",
+            "shasum" : "1bc4bf3c3c1bbd4c106ae4b5325d40e3d8b88952"
+         }
+      },
+      "3.0.0-rc.2" : {
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "jasmine-node" : "1.14.5",
+            "jscs" : "2.6.x",
+            "express" : "3.x",
+            "jshint" : "2.8.x",
+            "jsdoc" : "3.4.x"
+         },
+         "_npmOperationalInternal" : {
+            "tmp" : "tmp/twilio-3.0.0-rc.2.tgz_1456339824381_0.4424389817286283",
+            "host" : "packages-5-east.internal.npmjs.com"
+         },
+         "dependencies" : {
+            "deprecate" : "^0.1.0",
+            "scmp" : "0.0.3",
+            "request" : "2.67.x",
+            "q" : "2.0.x",
+            "lodash" : "4.0.0",
+            "moment" : "2.11.1",
+            "rootpath" : "0.1.2",
+            "jwt-simple" : "0.1.x",
+            "jsonwebtoken" : "5.4.x"
+         },
+         "name" : "twilio",
+         "_nodeVersion" : "5.6.0",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "_npmVersion" : "3.6.0",
+         "version" : "3.0.0-rc.2",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "fc27e9eee827dacbfaaf6bdaa54c8bb77f105005",
+         "_id" : "twilio@3.0.0-rc.2",
+         "maintainers" : [
+            {
+               "email" : "carlosdiazpadron@gmail.com",
+               "name" : "carlosdp"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            },
+            {
+               "email" : "niu@jingming.ca",
+               "name" : "jingming"
+            },
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "email" : "praser05@gmail.com",
+               "name" : "praser05"
+            },
+            {
+               "email" : "sramakrishnan@twilio.com",
+               "name" : "senthnpm"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "license" : "MIT",
+         "gitHead" : "aba9f5fe1cbd7d8521cddf71be2882ff87fd2917",
+         "author" : {
+            "email" : "api@twilio.com",
+            "name" : "API Team"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-3.0.0-rc.2.tgz",
+            "shasum" : "fc27e9eee827dacbfaaf6bdaa54c8bb77f105005"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "jscs" : "jscs -c .jscs lib/rest/** lib/base/** lib/http/**",
+            "check" : "npm run jshint; npm run jscs",
+            "test" : "jasmine-node --captureExceptions spec",
+            "jshint" : "jshint lib/rest/** lib/base/** lib/http/** spec/integration/**",
+            "jsdoc" : "jsdoc -r lib -d docs"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "email" : "niu@jingming.ca",
+            "name" : "jingming"
+         }
+      },
+      "2.0.0" : {
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.0.0.tgz",
+            "shasum" : "2b762e4890509514c295d152c22a596924f37bdd"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "_npmUser" : {
+            "name" : "dougblack",
+            "email" : "doug@dougblack.io"
+         },
+         "description" : "A Twilio helper library",
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "devDependencies" : {
+            "jasmine-node" : "*",
+            "express" : "3.x"
+         },
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "name" : "twilio",
+         "dependencies" : {
+            "q" : "0.9.7",
+            "scmp" : "0.0.3",
+            "request" : "2.27.x",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "version" : "2.0.0",
+         "_npmVersion" : "1.4.7",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            }
+         ],
+         "_id" : "twilio@2.0.0",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "2b762e4890509514c295d152c22a596924f37bdd"
+      },
+      "0.2.0" : {
+         "modules" : {
+            "twiml" : "./lib/twiml",
+            "client" : "./lib/twilio"
+         },
+         "_id" : "twilio@0.2.0",
+         "description" : "A Twilio helper library",
+         "_nodeSupported" : true,
+         "engines" : {
+            "node" : ">=0.1.90"
+         },
+         "main" : "./lib",
+         "version" : "0.2.0",
+         "_npmVersion" : "0.2.3-6",
+         "_nodeVersion" : "v0.3.0-pre",
+         "dist" : {
+            "shasum" : "a406ede1a526b4f6917fa6d88aeff62a6cbd611e",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.2.0.tgz"
+         },
+         "author" : {
+            "url" : "http://github.com/sjwalter",
+            "name" : "Stephen Walters"
+         },
+         "name" : "twilio",
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/sjwalter/node-twilio.git"
+         }
+      },
+      "1.8.0" : {
+         "devDependencies" : {
+            "jasmine-node" : "*",
+            "express" : "3.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "dependencies" : {
+            "q" : "0.9.7",
+            "scmp" : "0.0.3",
+            "request" : "2.27.x",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "_npmVersion" : "1.4.28",
+         "version" : "1.8.0",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "6764777004dff477a3939452ff2d28c970ebd16b",
+         "_id" : "twilio@1.8.0",
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "gitHead" : "2556ac688014d914bc5c792bce8dbddd477a6979",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "shasum" : "6764777004dff477a3939452ff2d28c970ebd16b",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.8.0.tgz"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library"
+      },
+      "0.3.3" : {
+         "repository" : {
+            "url" : "https://github.com/kwhinnery/twilio-node.git",
+            "type" : "git"
+         },
+         "dependencies" : {
+            "express" : ">= 2.0.0"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.3.3.tgz",
+            "shasum" : "1454b0c9f7513f390049c43b487a954cad2d8700"
+         },
+         "contributors" : [
+            {
+               "name" : "Stephen Walters"
+            }
+         ],
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "name" : "twilio",
+         "version" : "0.3.3",
+         "_npmVersion" : "1.1.66",
+         "main" : "./lib",
+         "_id" : "twilio@0.3.3",
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "engines" : {
+            "node" : ">=0.4.0"
+         },
+         "maintainers" : [
+            {
+               "email" : "stephenwalters@gmail.com",
+               "name" : "sjwalter"
+            },
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ]
+      },
+      "0.0.3" : {
+         "description" : "Twilio API bindings for Node",
+         "_nodeSupported" : true,
+         "engines" : {
+            "node" : "*"
+         },
+         "_id" : "twilio@0.0.3",
+         "main" : "./index",
+         "_npmVersion" : "0.2.7-2",
+         "version" : "0.0.3",
+         "keywords" : [
+            "twilio",
+            "sms",
+            "api"
+         ],
+         "name" : "twilio",
+         "author" : {
+            "email" : "aaron.blohowiak@gmail.com",
+            "name" : "Aaron Blohowiak"
+         },
+         "_nodeVersion" : "v0.3.1-pre",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.0.3.tgz",
+            "shasum" : "bd3595fe59e40a8f6215fcea02b07dbd6e0852e8"
+         },
+         "dependencies" : {
+            "restler.aaronblohowiak" : "0.0.2",
+            "libxmljs" : "0.4.1"
+         },
+         "repository" : {
+            "url" : "git://github.com/aaronblohowiak/Twilio-Node.git",
+            "type" : "git"
+         },
+         "homepage" : "http://github.com/aaronblohowiak/Twilio-Node"
+      },
+      "3.1.0-edge" : {
+         "dependencies" : {
+            "underscore" : "1.x",
+            "string.prototype.startswith" : "^0.2.0",
+            "jsonwebtoken" : "5.4.x",
+            "jwt-simple" : "0.3.x",
+            "deprecate" : "^0.1.0",
+            "q" : "0.9.7",
+            "scmp" : "0.0.3",
+            "request" : "2.55.x"
+         },
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "_nodeVersion" : "0.12.7",
+         "name" : "twilio",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "devDependencies" : {
+            "jasmine-node" : "2.0.x",
+            "express" : "3.x"
+         },
+         "_id" : "twilio@3.1.0-edge",
+         "_shasum" : "68a35df78793d8afc132afada9e3ca0f9632d23d",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "maintainers" : [
+            {
+               "name" : "carlosdp",
+               "email" : "carlosdiazpadron@gmail.com"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            },
+            {
+               "name" : "jingming",
+               "email" : "niu@jingming.ca"
+            },
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            },
+            {
+               "email" : "praser05@gmail.com",
+               "name" : "praser05"
+            },
+            {
+               "email" : "sramakrishnan@twilio.com",
+               "name" : "senthnpm"
+            },
+            {
+               "name" : "twiliomatt",
+               "email" : "matt@twilio.com"
+            }
+         ],
+         "version" : "3.1.0-edge",
+         "_npmVersion" : "3.3.9",
+         "license" : "MIT",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-3.1.0-edge.tgz",
+            "shasum" : "68a35df78793d8afc132afada9e3ca0f9632d23d"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "gitHead" : "3541bdd65960b72401348c17d25aca430bc269ec",
+         "repository" : {
+            "url" : "git+https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "jingming",
+            "email" : "niu@jingming.ca"
+         },
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         },
+         "main" : "./lib",
+         "_from" : "."
+      },
+      "1.4.0" : {
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "main" : "./lib",
+         "_from" : ".",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "shasum" : "d1a82ef3aa9435c211f22151e9b2bc56d9bea5cf",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.4.0.tgz"
+         },
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@1.4.0",
+         "_npmVersion" : "1.3.5",
+         "version" : "1.4.0",
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ],
+         "dependencies" : {
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x",
+            "q" : "0.9.7",
+            "request" : "2.x"
+         },
+         "devDependencies" : {
+            "ejs" : "0.8.x",
+            "connect" : "2.x",
+            "express" : "2.x"
+         },
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         }
+      },
+      "2.6.0" : {
+         "version" : "2.6.0",
+         "_npmVersion" : "2.14.2",
+         "_id" : "twilio@2.6.0",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "29e8531bb559c98cc5552c0905cc6b764c52ba05",
+         "maintainers" : [
+            {
+               "name" : "carlosdp",
+               "email" : "carlosdiazpadron@gmail.com"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            },
+            {
+               "email" : "niu@jingming.ca",
+               "name" : "jingming"
+            },
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            },
+            {
+               "email" : "praser05@gmail.com",
+               "name" : "praser05"
+            },
+            {
+               "name" : "senthnpm",
+               "email" : "sramakrishnan@twilio.com"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "devDependencies" : {
+            "express" : "3.x",
+            "jasmine-node" : "2.0.x"
+         },
+         "dependencies" : {
+            "underscore" : "1.x",
+            "string.prototype.startswith" : "^0.2.0",
+            "jwt-simple" : "0.1.x",
+            "jsonwebtoken" : "5.4.x",
+            "deprecate" : "^0.1.0",
+            "request" : "2.55.x",
+            "scmp" : "0.0.3",
+            "q" : "0.9.7"
+         },
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "_nodeVersion" : "4.0.0",
+         "name" : "twilio",
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "email" : "praser05@gmail.com",
+            "name" : "praser05"
+         },
+         "repository" : {
+            "type" : "git",
+            "url" : "git+https://github.com/twilio/twilio-node.git"
+         },
+         "license" : "MIT",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.6.0.tgz",
+            "shasum" : "29e8531bb559c98cc5552c0905cc6b764c52ba05"
+         },
+         "gitHead" : "293c5060736b8a56b6e50a523a7ff3e0e1693428",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         }
+      },
+      "1.9.0" : {
+         "dependencies" : {
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x",
+            "q" : "0.9.7",
+            "scmp" : "0.0.3",
+            "request" : "2.27.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "jasmine-node" : "*",
+            "express" : "3.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "2082e3da809dfaaf12e70c490041d1ce446320db",
+         "_id" : "twilio@1.9.0",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ],
+         "_npmVersion" : "1.4.28",
+         "version" : "1.9.0",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "gitHead" : "7d29158c5b3b14554ced00e7ca999eabef152855",
+         "dist" : {
+            "shasum" : "2082e3da809dfaaf12e70c490041d1ce446320db",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.9.0.tgz"
+         },
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         }
+      },
+      "2.2.0" : {
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "shasum" : "a3ae8c8bc0a7d4f4ee10dd9c2a22335f4cc7e92f",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.2.0.tgz"
+         },
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "email" : "doug@dougblack.io",
+            "name" : "dougblack"
+         },
+         "main" : "./lib",
+         "_from" : "./",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "dependencies" : {
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x",
+            "scmp" : "0.0.3",
+            "request" : "2.55.x",
+            "q" : "0.9.7"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "jasmine-node" : "^1.14.5",
+            "express" : "3.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "a3ae8c8bc0a7d4f4ee10dd9c2a22335f4cc7e92f",
+         "_id" : "twilio@2.2.0",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            }
+         ],
+         "_npmVersion" : "1.4.7",
+         "version" : "2.2.0"
+      },
+      "1.3.0" : {
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "shasum" : "fa74332425cbfde039a64a9f37061425eb82037a",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.3.0.tgz"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "devDependencies" : {
+            "connect" : "2.x",
+            "ejs" : "0.8.x",
+            "express" : "2.x"
+         },
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "email" : "carter@twilio.com",
+               "name" : "Carter Rabasa"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ],
+         "dependencies" : {
+            "request" : "2.x",
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x"
+         },
+         "_npmVersion" : "1.3.5",
+         "version" : "1.3.0",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@1.3.0"
+      },
+      "0.3.0" : {
+         "modules" : {
+            "twiml" : "./lib/twiml",
+            "client" : "./lib/twilio"
+         },
+         "_id" : "twilio@0.3.0",
+         "engines" : {
+            "node" : ">=0.1.90"
+         },
+         "_nodeSupported" : true,
+         "description" : "A Twilio helper library",
+         "main" : "./lib",
+         "version" : "0.3.0",
+         "_npmVersion" : "0.2.5-1",
+         "dist" : {
+            "shasum" : "5a9c043b92a193556dc5555d311e9b9eba1610d0",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.3.0.tgz"
+         },
+         "_nodeVersion" : "v0.4.1",
+         "name" : "twilio",
+         "author" : {
+            "url" : "http://github.com/sjwalter",
+            "name" : "Stephen Walters"
+         },
+         "repository" : {
+            "url" : "https://github.com/sjwalter/node-twilio.git",
+            "type" : "git"
+         }
+      },
+      "3.0.0-edge" : {
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "senthnpm",
+            "email" : "sramakrishnan@twilio.com"
+         },
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "gitHead" : "fc42aa56461c613a1d137e3aa879fd49a79c0577",
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "shasum" : "4bb396ae7312f18c2fb00a0e6568c82a1ad3c9ed",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-3.0.0-edge.tgz"
+         },
+         "license" : "MIT",
+         "_npmVersion" : "2.7.4",
+         "version" : "3.0.0-edge",
+         "maintainers" : [
+            {
+               "name" : "carlosdp",
+               "email" : "carlosdiazpadron@gmail.com"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            },
+            {
+               "name" : "jingming",
+               "email" : "niu@jingming.ca"
+            },
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            },
+            {
+               "name" : "praser05",
+               "email" : "praser05@gmail.com"
+            },
+            {
+               "email" : "sramakrishnan@twilio.com",
+               "name" : "senthnpm"
+            },
+            {
+               "name" : "twiliomatt",
+               "email" : "matt@twilio.com"
+            }
+         ],
+         "_shasum" : "4bb396ae7312f18c2fb00a0e6568c82a1ad3c9ed",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_id" : "twilio@3.0.0-edge",
+         "devDependencies" : {
+            "jasmine-node" : "2.0.x",
+            "express" : "3.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "name" : "twilio",
+         "_nodeVersion" : "0.12.2",
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "dependencies" : {
+            "underscore" : "1.x",
+            "string.prototype.startswith" : "^0.2.0",
+            "jsonwebtoken" : "5.4.x",
+            "jwt-simple" : "0.3.x",
+            "scmp" : "0.0.3",
+            "deprecate" : "^0.1.0",
+            "request" : "2.55.x",
+            "q" : "0.9.7"
+         }
+      },
+      "2.1.1" : {
+         "dist" : {
+            "shasum" : "cac4f0d3ed83f86afb1937e525c917c4cee88ec6",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.1.1.tgz"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "email" : "doug@dougblack.io",
+            "name" : "dougblack"
+         },
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib",
+         "_from" : "./",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "name" : "twilio",
+         "dependencies" : {
+            "scmp" : "0.0.3",
+            "request" : "2.55.x",
+            "q" : "0.9.7",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "devDependencies" : {
+            "jasmine-node" : "^1.14.5",
+            "express" : "3.x"
+         },
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            }
+         ],
+         "_id" : "twilio@2.1.1",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "cac4f0d3ed83f86afb1937e525c917c4cee88ec6",
+         "version" : "2.1.1",
+         "_npmVersion" : "1.4.7"
+      },
+      "1.2.0" : {
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.2.0.tgz",
+            "shasum" : "7cf4a323f86408836471493445382c28951cc537"
+         },
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "dependencies" : {
+            "request" : "2.x",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "email" : "carter@twilio.com",
+               "name" : "Carter Rabasa"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "ejs" : "0.8.x",
+            "connect" : "2.x",
+            "express" : "2.x"
+         },
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@1.2.0",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ],
+         "_npmVersion" : "1.2.32",
+         "version" : "1.2.0"
+      },
+      "2.7.0" : {
+         "license" : "MIT",
+         "dist" : {
+            "shasum" : "3da96a64a74eecf976dc1bf1722e48b53549bfad",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.7.0.tgz"
+         },
+         "gitHead" : "a9900265d893d0b898357b242c5bc7a20c62a271",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "repository" : {
+            "url" : "git+https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "_npmUser" : {
+            "name" : "jingming",
+            "email" : "niu@jingming.ca"
+         },
+         "description" : "A Twilio helper library",
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "dependencies" : {
+            "jsonwebtoken" : "5.4.x",
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x",
+            "string.prototype.startswith" : "^0.2.0",
+            "scmp" : "0.0.3",
+            "deprecate" : "^0.1.0",
+            "request" : "2.55.x",
+            "q" : "0.9.7"
+         },
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "_nodeVersion" : "0.12.7",
+         "name" : "twilio",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "devDependencies" : {
+            "jasmine-node" : "2.0.x",
+            "express" : "3.x"
+         },
+         "_id" : "twilio@2.7.0",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "3da96a64a74eecf976dc1bf1722e48b53549bfad",
+         "maintainers" : [
+            {
+               "email" : "carlosdiazpadron@gmail.com",
+               "name" : "carlosdp"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            },
+            {
+               "email" : "niu@jingming.ca",
+               "name" : "jingming"
+            },
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "name" : "praser05",
+               "email" : "praser05@gmail.com"
+            },
+            {
+               "name" : "senthnpm",
+               "email" : "sramakrishnan@twilio.com"
+            },
+            {
+               "name" : "twiliomatt",
+               "email" : "matt@twilio.com"
+            }
+         ],
+         "version" : "2.7.0",
+         "_npmVersion" : "3.3.9"
+      },
+      "3.2.0-edge" : {
+         "dependencies" : {
+            "string.prototype.startswith" : "^0.2.0",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.3.x",
+            "jsonwebtoken" : "5.4.x",
+            "scmp" : "0.0.3",
+            "deprecate" : "^0.1.0",
+            "q" : "0.9.7",
+            "request" : "2.55.x"
+         },
+         "name" : "twilio",
+         "_nodeVersion" : "0.12.2",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "jasmine-node" : "2.0.x",
+            "express" : "3.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "_shasum" : "782a949b4d9878ddf911ac07c262cc2e952c2bec",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_id" : "twilio@3.2.0-edge",
+         "maintainers" : [
+            {
+               "email" : "carlosdiazpadron@gmail.com",
+               "name" : "carlosdp"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            },
+            {
+               "email" : "niu@jingming.ca",
+               "name" : "jingming"
+            },
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "name" : "praser05",
+               "email" : "praser05@gmail.com"
+            },
+            {
+               "name" : "senthnpm",
+               "email" : "sramakrishnan@twilio.com"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "_npmVersion" : "2.7.4",
+         "version" : "3.2.0-edge",
+         "license" : "MIT",
+         "gitHead" : "a4d3e40b1350a27a0c97c7336138722beae3c782",
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "shasum" : "782a949b4d9878ddf911ac07c262cc2e952c2bec",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-3.2.0-edge.tgz"
+         },
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "senthnpm",
+            "email" : "sramakrishnan@twilio.com"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         }
+      },
+      "0.8.1" : {
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/kwhinnery/twilio-node.git"
+         },
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.8.1.tgz",
+            "shasum" : "b2e277ed5abd737e76ba6a52cb527d8cbaaaf256"
+         },
+         "_npmVersion" : "1.1.66",
+         "version" : "0.8.1",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@0.8.1",
+         "devDependencies" : {
+            "express" : "2.x",
+            "connect" : "2.x",
+            "ejs" : "0.8.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ],
+         "dependencies" : {
+            "request" : "2.x",
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x"
+         }
+      },
+      "2.1.0" : {
+         "gitHead" : "d0f72beff3879410f522a27d01dc15c71048f3d2",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.1.0.tgz",
+            "shasum" : "e1a769e71e760836099a72b3b9f720305b0c3c0f"
+         },
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "dependencies" : {
+            "request" : "2.27.x",
+            "scmp" : "0.0.3",
+            "q" : "0.9.7",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "jasmine-node" : "^1.14.5",
+            "express" : "3.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "_shasum" : "e1a769e71e760836099a72b3b9f720305b0c3c0f",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_id" : "twilio@2.1.0",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            }
+         ],
+         "_npmVersion" : "1.4.28",
+         "version" : "2.1.0"
+      },
+      "1.0.0" : {
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.0.0.tgz",
+            "shasum" : "43b88da33d83024bd643a389378b3f6db777d7c8"
+         },
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "repository" : {
+            "url" : "https://github.com/kwhinnery/twilio-node.git",
+            "type" : "git"
+         },
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "description" : "A Twilio helper library",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib",
+         "dependencies" : {
+            "request" : "2.x",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ],
+         "name" : "twilio",
+         "devDependencies" : {
+            "express" : "2.x",
+            "connect" : "2.x",
+            "ejs" : "0.8.x"
+         },
+         "_id" : "twilio@1.0.0",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "version" : "1.0.0",
+         "_npmVersion" : "1.1.66"
+      },
+      "0.4.1" : {
+         "repository" : {
+            "url" : "https://github.com/kwhinnery/twilio-node.git",
+            "type" : "git"
+         },
+         "dependencies" : {
+            "express" : ">= 2.0.0"
+         },
+         "contributors" : [
+            {
+               "name" : "Stephen Walters"
+            }
+         ],
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.4.1.tgz",
+            "shasum" : "9aeda0e46911f216c2eec4171b883f5685d4f427"
+         },
+         "name" : "twilio",
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "version" : "0.4.1",
+         "_npmVersion" : "1.1.66",
+         "main" : "./lib",
+         "_id" : "twilio@0.4.1",
+         "engines" : {
+            "node" : ">=0.4.0"
+         },
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ]
+      },
+      "1.1.0" : {
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "email" : "stephenwalters@gmail.com",
+               "name" : "Stephen Walters"
+            }
+         ],
+         "name" : "twilio",
+         "dependencies" : {
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x",
+            "request" : "2.x"
+         },
+         "devDependencies" : {
+            "connect" : "2.x",
+            "ejs" : "0.8.x",
+            "express" : "2.x"
+         },
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "_id" : "twilio@1.1.0",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "version" : "1.1.0",
+         "_npmVersion" : "1.1.66",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.1.0.tgz",
+            "shasum" : "eec8cf38708a8aa6142ec608676f60336b17b6ed"
+         },
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib"
+      },
+      "1.1.3" : {
+         "_id" : "twilio@1.1.3",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ],
+         "version" : "1.1.3",
+         "_npmVersion" : "1.2.21",
+         "dependencies" : {
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x",
+            "request" : "2.x"
+         },
+         "contributors" : [
+            {
+               "email" : "carter@twilio.com",
+               "name" : "Carter Rabasa"
+            },
+            {
+               "email" : "stephenwalters@gmail.com",
+               "name" : "Stephen Walters"
+            }
+         ],
+         "name" : "twilio",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "express" : "2.x",
+            "connect" : "2.x",
+            "ejs" : "0.8.x"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "dist" : {
+            "shasum" : "664888e08ff2d556026e7ef3ae6279a039f3139e",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.1.3.tgz"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         }
+      },
+      "0.8.0" : {
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/kwhinnery/twilio-node.git"
+         },
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.8.0.tgz",
+            "shasum" : "bd4ef44bb354ce612236bd68f0a197b90b44209d"
+         },
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "devDependencies" : {
+            "express" : "2.x",
+            "ejs" : "0.8.x",
+            "connect" : "2.x"
+         },
+         "dependencies" : {
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x",
+            "request" : "2.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "email" : "stephenwalters@gmail.com",
+               "name" : "Stephen Walters"
+            }
+         ],
+         "_npmVersion" : "1.1.66",
+         "version" : "0.8.0",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@0.8.0",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ]
+      },
+      "1.10.0" : {
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "description" : "A Twilio helper library",
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "dist" : {
+            "shasum" : "b4004f1187baf818233a4dd5e13478d8df9101da",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.10.0.tgz"
+         },
+         "gitHead" : "1f64cd05fe04e622fb1800637103ecec200a629e",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "version" : "1.10.0",
+         "_npmVersion" : "1.4.28",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            }
+         ],
+         "_id" : "twilio@1.10.0",
+         "_shasum" : "b4004f1187baf818233a4dd5e13478d8df9101da",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "devDependencies" : {
+            "express" : "3.x",
+            "jasmine-node" : "*"
+         },
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "contributors" : [
+            {
+               "name" : "twilio-node contributors",
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+            }
+         ],
+         "name" : "twilio",
+         "dependencies" : {
+            "request" : "2.27.x",
+            "scmp" : "0.0.3",
+            "q" : "0.9.7",
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x"
+         }
+      },
+      "0.5.0" : {
+         "dependencies" : {
+            "pkginfo" : "0.2.x",
+            "underscore" : "1.x",
+            "request" : "2.x"
+         },
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "name" : "twilio",
+         "dist" : {
+            "shasum" : "2a2d8faa0f9a71d2c508e43e02ab13a66711522b",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.5.0.tgz"
+         },
+         "contributors" : [
+            {
+               "name" : "Stephen Walters"
+            }
+         ],
+         "repository" : {
+            "url" : "https://github.com/kwhinnery/twilio-node.git",
+            "type" : "git"
+         },
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "description" : "A Twilio helper library",
+         "_id" : "twilio@0.5.0",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "_npmVersion" : "1.1.66",
+         "version" : "0.5.0",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         }
+      },
+      "0.4.0" : {
+         "modules" : {
+            "client" : "./lib/twilio",
+            "twiml" : "./lib/twiml"
+         },
+         "_id" : "twilio@0.4.0",
+         "_nodeSupported" : true,
+         "engines" : {
+            "node" : ">=0.4.0"
+         },
+         "description" : "A Twilio helper library",
+         "main" : "./lib",
+         "version" : "0.4.0",
+         "_npmVersion" : "0.2.5-1",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.4.0.tgz",
+            "shasum" : "da472b227baa9216f091862f5702f2aac25583e2"
+         },
+         "_nodeVersion" : "v0.4.1",
+         "name" : "twilio",
+         "author" : {
+            "url" : "http://github.com/sjwalter",
+            "name" : "Stephen Walters"
+         },
+         "repository" : {
+            "url" : "https://github.com/sjwalter/node-twilio.git",
+            "type" : "git"
+         }
+      },
+      "2.5.2-edge" : {
+         "_nodeVersion" : "0.12.7",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "name" : "twilio",
+         "dependencies" : {
+            "jwt-simple" : "0.3.x",
+            "string.prototype.startswith" : "^0.2.0",
+            "underscore" : "1.x",
+            "q" : "0.9.7",
+            "deprecate" : "^0.1.0",
+            "scmp" : "0.0.3",
+            "request" : "2.55.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "devDependencies" : {
+            "jasmine-node" : "2.0.x",
+            "express" : "3.x"
+         },
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "maintainers" : [
+            {
+               "name" : "carlosdp",
+               "email" : "carlosdiazpadron@gmail.com"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            },
+            {
+               "name" : "jingming",
+               "email" : "niu@jingming.ca"
+            },
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            },
+            {
+               "email" : "praser05@gmail.com",
+               "name" : "praser05"
+            },
+            {
+               "email" : "sramakrishnan@twilio.com",
+               "name" : "senthnpm"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "_id" : "twilio@2.5.2-edge",
+         "_shasum" : "d5a6597047cdd69057114e4474d9442d3fecc90f",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "version" : "2.5.2-edge",
+         "_npmVersion" : "3.3.9",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.5.2-edge.tgz",
+            "shasum" : "d5a6597047cdd69057114e4474d9442d3fecc90f"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "gitHead" : "f801209a2beee8affaada11ab8b25a456c1d3ec9",
+         "license" : "MIT",
+         "repository" : {
+            "type" : "git",
+            "url" : "git+https://github.com/twilio/twilio-node.git"
+         },
+         "_npmUser" : {
+            "name" : "jingming",
+            "email" : "niu@jingming.ca"
+         },
+         "description" : "A Twilio helper library",
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         },
+         "_from" : ".",
+         "main" : "./lib"
+      },
+      "3.3.0-edge" : {
+         "_npmUser" : {
+            "email" : "niu@jingming.ca",
+            "name" : "jingming"
+         },
+         "description" : "A Twilio helper library",
+         "main" : "./lib",
+         "_from" : ".",
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         },
+         "gitHead" : "695cdd870d1a0b4551968a341ab48d0152d84ba0",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-3.3.0-edge.tgz",
+            "shasum" : "0b99fdcf21bb657183c9a59cec56ccc6b225430c"
+         },
+         "license" : "MIT",
+         "repository" : {
+            "type" : "git",
+            "url" : "git+https://github.com/twilio/twilio-node.git"
+         },
+         "maintainers" : [
+            {
+               "name" : "carlosdp",
+               "email" : "carlosdiazpadron@gmail.com"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            },
+            {
+               "name" : "jingming",
+               "email" : "niu@jingming.ca"
+            },
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            },
+            {
+               "email" : "praser05@gmail.com",
+               "name" : "praser05"
+            },
+            {
+               "name" : "senthnpm",
+               "email" : "sramakrishnan@twilio.com"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "0b99fdcf21bb657183c9a59cec56ccc6b225430c",
+         "_id" : "twilio@3.3.0-edge",
+         "_npmVersion" : "3.3.9",
+         "version" : "3.3.0-edge",
+         "name" : "twilio",
+         "_nodeVersion" : "0.12.7",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "dependencies" : {
+            "deprecate" : "^0.1.0",
+            "scmp" : "0.0.3",
+            "request" : "2.55.x",
+            "q" : "0.9.7",
+            "string.prototype.startswith" : "^0.2.0",
+            "underscore" : "1.x",
+            "jsonwebtoken" : "5.4.x",
+            "jwt-simple" : "0.3.x"
+         },
+         "devDependencies" : {
+            "jasmine-node" : "2.0.x",
+            "express" : "3.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         }
+      },
+      "1.1.2" : {
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@1.1.2",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ],
+         "_npmVersion" : "1.2.21",
+         "version" : "1.1.2",
+         "dependencies" : {
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x",
+            "request" : "2.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "connect" : "2.x",
+            "ejs" : "0.8.x",
+            "express" : "2.x"
+         },
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "shasum" : "ddf7e22ff0926eb7d3c1b500414c5b73682f630e",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.1.2.tgz"
+         },
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         }
+      },
+      "2.5.1" : {
+         "_npmVersion" : "2.7.4",
+         "version" : "2.5.1",
+         "_shasum" : "4e8db66118a8d2d163a234df17deeac9a83566d3",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_id" : "twilio@2.5.1",
+         "maintainers" : [
+            {
+               "name" : "carlosdp",
+               "email" : "carlosdiazpadron@gmail.com"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            },
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "name" : "praser05",
+               "email" : "praser05@gmail.com"
+            },
+            {
+               "email" : "sramakrishnan@twilio.com",
+               "name" : "senthnpm"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "jasmine-node" : "^1.14.5",
+            "express" : "3.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "dependencies" : {
+            "deprecate" : "^0.1.0",
+            "request" : "2.55.x",
+            "scmp" : "0.0.3",
+            "q" : "0.9.7",
+            "underscore" : "1.x",
+            "string.prototype.startswith" : "^0.2.0",
+            "jwt-simple" : "0.1.x"
+         },
+         "name" : "twilio",
+         "_nodeVersion" : "0.12.2",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "main" : "./lib",
+         "_from" : ".",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "senthnpm",
+            "email" : "sramakrishnan@twilio.com"
+         },
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "license" : "MIT",
+         "gitHead" : "87c65a21dafc2c1e1e863c25d81e548d4926153a",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.5.1.tgz",
+            "shasum" : "4e8db66118a8d2d163a234df17deeac9a83566d3"
+         }
+      },
+      "2.8.0" : {
+         "_npmVersion" : "2.14.2",
+         "version" : "2.8.0",
+         "maintainers" : [
+            {
+               "email" : "carlosdiazpadron@gmail.com",
+               "name" : "carlosdp"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            },
+            {
+               "email" : "niu@jingming.ca",
+               "name" : "jingming"
+            },
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "name" : "praser05",
+               "email" : "praser05@gmail.com"
+            },
+            {
+               "name" : "senthnpm",
+               "email" : "sramakrishnan@twilio.com"
+            },
+            {
+               "name" : "twiliomatt",
+               "email" : "matt@twilio.com"
+            }
+         ],
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "463d8e0e321bbee3b44ced8ab6c4d8c2f87693b1",
+         "_id" : "twilio@2.8.0",
+         "devDependencies" : {
+            "express" : "3.x",
+            "jasmine-node" : "2.0.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "name" : "twilio",
+         "_nodeVersion" : "4.0.0",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "dependencies" : {
+            "underscore" : "1.x",
+            "string.prototype.startswith" : "^0.2.0",
+            "jsonwebtoken" : "5.4.x",
+            "jwt-simple" : "0.1.x",
+            "deprecate" : "^0.1.0",
+            "q" : "0.9.7",
+            "scmp" : "0.0.3",
+            "request" : "2.55.x"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "scripts" : {
+            "test" : "jasmine-node --captureExceptions spec"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "praser05",
+            "email" : "praser05@gmail.com"
+         },
+         "repository" : {
+            "url" : "git+https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "gitHead" : "86bee54920e5c5f12b27f5605c2fccc4e6b463ff",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "shasum" : "463d8e0e321bbee3b44ced8ab6c4d8c2f87693b1",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.8.0.tgz"
+         },
+         "license" : "MIT"
+      },
+      "2.5.1-edge" : {
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "express" : "3.x",
+            "jasmine-node" : "^1.14.5"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node",
+         "dependencies" : {
+            "string.prototype.startswith" : "^0.2.0",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.3.x",
+            "request" : "2.55.x",
+            "deprecate" : "^0.1.0",
+            "scmp" : "0.0.3",
+            "q" : "0.9.7"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "_nodeVersion" : "0.12.2",
+         "_npmVersion" : "2.7.4",
+         "version" : "2.5.1-edge",
+         "_shasum" : "85b0bcbfa0a435e43e8538eaeac174a83d145577",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_id" : "twilio@2.5.1-edge",
+         "maintainers" : [
+            {
+               "name" : "carlosdp",
+               "email" : "carlosdiazpadron@gmail.com"
+            },
+            {
+               "name" : "dougblack",
+               "email" : "doug@dougblack.io"
+            },
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "name" : "praser05",
+               "email" : "praser05@gmail.com"
+            },
+            {
+               "name" : "senthnpm",
+               "email" : "sramakrishnan@twilio.com"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "license" : "MIT",
+         "gitHead" : "99ea573beea187a0e8347d2608de7d6c060f2208",
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "dist" : {
+            "shasum" : "85b0bcbfa0a435e43e8538eaeac174a83d145577",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.5.1-edge.tgz"
+         },
+         "main" : "./lib",
+         "_from" : ".",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "senthnpm",
+            "email" : "sramakrishnan@twilio.com"
+         }
+      },
+      "0.6.0" : {
+         "version" : "0.6.0",
+         "_npmVersion" : "1.1.66",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib",
+         "_id" : "twilio@0.6.0",
+         "_npmUser" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "kwhinnery"
+         },
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "description" : "A Twilio helper library",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ],
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/kwhinnery/twilio-node.git"
+         },
+         "dependencies" : {
+            "underscore" : "1.x",
+            "request" : "2.x"
+         },
+         "contributors" : [
+            {
+               "name" : "Stephen Walters"
+            }
+         ],
+         "dist" : {
+            "shasum" : "5155234fa8c2d5c43295470a8c196b747c2babb7",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.6.0.tgz"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "name" : "twilio"
+      },
+      "2.3.0" : {
+         "_npmVersion" : "2.9.1",
+         "version" : "2.3.0",
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_shasum" : "ae95232a8cffe4d7a91fefb2e8f4911a5ab81da3",
+         "_id" : "twilio@2.3.0",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            },
+            {
+               "email" : "doug@dougblack.io",
+               "name" : "dougblack"
+            },
+            {
+               "email" : "matt@twilio.com",
+               "name" : "twiliomatt"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "jasmine-node" : "^1.14.5",
+            "express" : "3.x"
+         },
+         "homepage" : "https://github.com/twilio/twilio-node#readme",
+         "dependencies" : {
+            "deprecate" : "^0.1.0",
+            "q" : "0.9.7",
+            "scmp" : "0.0.3",
+            "request" : "2.55.x",
+            "string.prototype.startswith" : "^0.2.0",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "name" : "twilio",
+         "_nodeVersion" : "0.12.3",
+         "contributors" : [
+            {
+               "url" : "https://github.com/twilio/twilio-node/graphs/contributors",
+               "name" : "twilio-node contributors"
+            }
+         ],
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "_npmUser" : {
+            "email" : "matt@twilio.com",
+            "name" : "twiliomatt"
+         },
+         "description" : "A Twilio helper library",
+         "repository" : {
+            "type" : "git",
+            "url" : "git+https://github.com/twilio/twilio-node.git"
+         },
+         "license" : "MIT",
+         "gitHead" : "8dad208c9832bd124902e597bc29ab623512100e",
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-2.3.0.tgz",
+            "shasum" : "ae95232a8cffe4d7a91fefb2e8f4911a5ab81da3"
+         }
+      },
+      "1.6.0" : {
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "shasum" : "3667691b26e90e1698100e9d58db43943c6e6c29",
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.6.0.tgz"
+         },
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/twilio/twilio-node.git"
+         },
+         "description" : "A Twilio helper library",
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "_from" : ".",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "dependencies" : {
+            "jwt-simple" : "0.1.x",
+            "underscore" : "1.x",
+            "q" : "0.9.7",
+            "request" : "2.27.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "email" : "stephenwalters@gmail.com",
+               "name" : "Stephen Walters"
+            }
+         ],
+         "bugs" : {
+            "url" : "https://github.com/twilio/twilio-node/issues"
+         },
+         "devDependencies" : {
+            "express" : "3.x"
+         },
+         "engines" : {
+            "node" : ">=0.8.0"
+         },
+         "_id" : "twilio@1.6.0",
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "_npmVersion" : "1.3.5",
+         "version" : "1.6.0"
+      },
+      "0.7.1" : {
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "_id" : "twilio@0.7.1",
+         "maintainers" : [
+            {
+               "email" : "kevin.whinnery@gmail.com",
+               "name" : "kwhinnery"
+            }
+         ],
+         "_npmVersion" : "1.1.66",
+         "version" : "0.7.1",
+         "dependencies" : {
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x",
+            "request" : "2.x"
+         },
+         "name" : "twilio",
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "email" : "stephenwalters@gmail.com",
+               "name" : "Stephen Walters"
+            }
+         ],
+         "devDependencies" : {
+            "ejs" : "0.8.x",
+            "connect" : "2.x",
+            "express" : "2.x"
+         },
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "main" : "./lib",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "author" : {
+            "email" : "kevin.whinnery@gmail.com",
+            "name" : "Kevin Whinnery"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-0.7.1.tgz",
+            "shasum" : "56e40203fb9578a0a3c45cc3b9e92c9bf97463dc"
+         },
+         "repository" : {
+            "type" : "git",
+            "url" : "https://github.com/kwhinnery/twilio-node.git"
+         }
+      },
+      "1.1.1" : {
+         "version" : "1.1.1",
+         "_npmVersion" : "1.1.66",
+         "_id" : "twilio@1.1.1",
+         "engines" : {
+            "node" : ">=0.6.0"
+         },
+         "maintainers" : [
+            {
+               "name" : "kwhinnery",
+               "email" : "kevin.whinnery@gmail.com"
+            }
+         ],
+         "devDependencies" : {
+            "connect" : "2.x",
+            "ejs" : "0.8.x",
+            "express" : "2.x"
+         },
+         "dependencies" : {
+            "request" : "2.x",
+            "underscore" : "1.x",
+            "jwt-simple" : "0.1.x"
+         },
+         "contributors" : [
+            {
+               "name" : "Carter Rabasa",
+               "email" : "carter@twilio.com"
+            },
+            {
+               "name" : "Stephen Walters",
+               "email" : "stephenwalters@gmail.com"
+            }
+         ],
+         "name" : "twilio",
+         "scripts" : {
+            "test" : "jasmine-node spec"
+         },
+         "main" : "./lib",
+         "_npmUser" : {
+            "name" : "kwhinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         },
+         "description" : "A Twilio helper library",
+         "repository" : {
+            "url" : "https://github.com/twilio/twilio-node.git",
+            "type" : "git"
+         },
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/twilio/-/twilio-1.1.1.tgz",
+            "shasum" : "4e94fa91e35901de4df0b5fc65bed4859861fc76"
+         },
+         "author" : {
+            "name" : "Kevin Whinnery",
+            "email" : "kevin.whinnery@gmail.com"
+         }
+      }
+   },
+   "readme" : "# twilio-node\n\nA node.js Twilio helper library.\n\n[![NPM](https://nodei.co/npm/twilio.png?downloads=true&stars=true)](https://nodei.co/npm/twilio/)\n\n[![Build Status](https://travis-ci.org/twilio/twilio-node.svg?branch=master)](https://travis-ci.org/twilio/twilio-node)\n\n## End User Docs\n\nFor detailed usage information and API docs, head out here:\n\n[http://twilio.github.io/twilio-node/](http://twilio.github.io/twilio-node/)\n\n## Getting help\n\nIf you need help installing or using the library, please contact Twilio Support at help@twilio.com first. Twilio's Support staff are well-versed in all of the Twilio Helper Libraries, and usually reply within 24 hours.\n\nIf you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!\n\n## Contributing\n\nBug fixes, docs, and enhancements welcome! If you're not familiar with the GitHub pull request/contribution process, [this is a nice tutorial](http://gun.io/blog/how-to-github-fork-branch-and-pull-request/).\n\n#### Getting Started\nFork and clone the repository. Install dependencies with:\n    \n    npm install\n\nRun the existing test spec with `npm test`.\n    \nTo run just one specific test file instead of the whole suite, provide a JavaScript regular expression that will match your spec file's name, like: \n\n    ./node_modules/.bin/jasmine-node spec -m .\\*accounts.\\*\n\nTo run live tests (such as `client.live.spec.js`) against your [Twilio account](https://www.twilio.com/user/account), you will need to create a local configuration file.  In the project root directory, do the following:\n\n* `cp config.sample.js config.js`\n* Edit `config.js` with your account information, a Twilio number, and your own mobile number\n* Run the live tests\n\n#### Contributing Code\n\nIn your fork, create a new feature/bug fix branch, [per the guide listed above](http://gun.io/blog/how-to-github-fork-branch-and-pull-request/). Write a Jasmine test spec for your new feature or bug fix, and hack until it passes!  Submit a pull request, and it will be reviewed as soon as possible.\n\n#### Contributing Docs\n\nRight now, the docs are maintained in static HTML in the `gh-pages` branch of this repository.  We hope to switch to a more robust documentation system soon, but for the time being, you can make documentation changes by editing [index.html](https://github.com/twilio/twilio-node/blob/gh-pages/index.html) directly.\n\n\n\n",
+   "author" : {
+      "name" : "Kevin Whinnery",
+      "email" : "kevin.whinnery@gmail.com"
+   },
+   "dist-tags" : {
+      "beta" : "2.5.1-beta.0",
+      "rc" : "3.0.0-rc.2",
+      "edge" : "3.2.0-edge",
+      "latest" : "2.9.0"
+   },
+   "_rev" : "36-75289d46f465ce9cf0670c30e8aea4fa",
+   "description" : "A Twilio helper library",
+   "users" : {
+      "lezyeoh" : true,
+      "corca" : true,
+      "vittore" : true,
+      "markthethomas" : true,
+      "goodseller" : true,
+      "jybleau" : true,
+      "galenandrew" : true,
+      "qqqppp9998" : true,
+      "andriecool" : true
+   },
+   "bugs" : {
+      "url" : "https://github.com/twilio/twilio-node/issues"
+   },
+   "homepage" : "https://github.com/twilio/twilio-node#readme",
+   "readmeFilename" : "README.md",
+   "name" : "twilio",
+   "contributors" : [
+      {
+         "name" : "twilio-node contributors",
+         "url" : "https://github.com/twilio/twilio-node/graphs/contributors"
+      }
+   ],
+   "_id" : "twilio",
+   "maintainers" : [
+      {
+         "email" : "carlosdiazpadron@gmail.com",
+         "name" : "carlosdp"
+      },
+      {
+         "email" : "doug@dougblack.io",
+         "name" : "dougblack"
+      },
+      {
+         "name" : "jingming",
+         "email" : "niu@jingming.ca"
+      },
+      {
+         "name" : "kwhinnery",
+         "email" : "kevin.whinnery@gmail.com"
+      },
+      {
+         "email" : "praser05@gmail.com",
+         "name" : "praser05"
+      },
+      {
+         "email" : "sramakrishnan@twilio.com",
+         "name" : "senthnpm"
+      },
+      {
+         "email" : "matt@twilio.com",
+         "name" : "twiliomatt"
+      }
+   ],
+   "time" : {
+      "1.7.0" : "2014-08-26T19:59:30.236Z",
+      "0.0.0" : "2011-03-08T00:34:18.576Z",
+      "1.1.4" : "2013-07-09T19:20:29.792Z",
+      "0.6.1" : "2012-12-21T18:57:33.697Z",
+      "0.6.2" : "2012-12-27T18:32:59.644Z",
+      "1.11.0" : "2015-02-19T06:06:25.243Z",
+      "0.7.0" : "2012-12-28T21:48:07.379Z",
+      "1.5.0" : "2013-12-27T18:05:55.561Z",
+      "3.0.0-rc.2" : "2016-02-24T18:50:30.011Z",
+      "2.9.0" : "2016-01-29T00:09:25.630Z",
+      "0.0.1" : "2011-03-08T00:34:18.576Z",
+      "3.0.0-rc1" : "2016-02-22T19:14:23.747Z",
+      "1.11.1" : "2015-02-27T15:23:57.410Z",
+      "1.0.1" : "2013-03-10T04:40:49.966Z",
+      "2.2.1" : "2015-05-27T20:28:03.192Z",
+      "2.4.0" : "2015-09-21T22:45:59.385Z",
+      "0.0.4" : "2011-03-08T00:34:18.576Z",
+      "2.5.2" : "2015-10-30T00:56:52.418Z",
+      "2.5.0" : "2015-10-07T20:36:27.186Z",
+      "3.1.0-edge" : "2015-12-09T00:07:45.313Z",
+      "1.9.0" : "2014-11-21T22:20:55.132Z",
+      "1.4.0" : "2013-10-24T15:52:47.655Z",
+      "2.6.0" : "2015-12-04T01:24:56.849Z",
+      "created" : "2011-03-08T00:34:18.576Z",
+      "2.2.0" : "2015-05-07T16:40:49.510Z",
+      "2.5.1-beta.0" : "2015-10-07T22:31:21.144Z",
+      "3.0.0-edge" : "2015-11-20T00:19:20.535Z",
+      "0.3.0" : "2011-03-08T00:34:18.576Z",
+      "1.3.0" : "2013-10-21T14:44:17.454Z",
+      "1.8.0" : "2014-11-14T00:43:55.896Z",
+      "0.2.0" : "2011-03-08T00:34:18.576Z",
+      "2.0.0" : "2015-04-16T17:19:54.226Z",
+      "0.0.3" : "2011-03-08T00:34:18.576Z",
+      "0.3.3" : "2012-12-04T17:57:00.196Z",
+      "2.5.1-beta" : "2015-10-07T22:05:43.060Z",
+      "0.8.1" : "2013-02-19T15:59:12.747Z",
+      "1.0.0" : "2013-03-07T04:58:55.396Z",
+      "2.1.0" : "2015-04-28T18:26:59.654Z",
+      "2.1.1" : "2015-05-06T23:31:55.200Z",
+      "1.2.0" : "2013-09-18T17:26:55.434Z",
+      "2.7.0" : "2015-12-08T23:59:37.768Z",
+      "3.2.0-edge" : "2015-12-10T01:06:00.266Z",
+      "1.1.2" : "2013-05-30T04:14:50.371Z",
+      "3.3.0-edge" : "2016-01-29T00:14:53.170Z",
+      "2.5.2-edge" : "2015-10-30T00:41:57.168Z",
+      "2.5.1-edge" : "2015-10-09T01:36:27.634Z",
+      "0.6.0" : "2012-12-20T17:13:27.153Z",
+      "2.8.0" : "2015-12-17T00:40:10.959Z",
+      "2.5.1" : "2015-10-07T21:30:07.526Z",
+      "1.1.1" : "2013-05-16T19:12:06.845Z",
+      "modified" : "2016-02-24T18:50:30.011Z",
+      "1.6.0" : "2014-03-03T17:45:55.041Z",
+      "2.3.0" : "2015-08-11T17:52:45.372Z",
+      "0.7.1" : "2013-01-03T20:15:44.269Z",
+      "0.4.1" : "2012-12-04T18:03:37.751Z",
+      "0.5.0" : "2012-12-19T18:40:49.455Z",
+      "1.10.0" : "2014-12-05T02:48:02.098Z",
+      "0.8.0" : "2013-02-18T21:06:10.436Z",
+      "1.1.3" : "2013-06-11T18:39:53.717Z",
+      "1.1.0" : "2013-03-18T16:17:49.985Z",
+      "0.4.0" : "2011-04-04T17:03:59.535Z"
+   }
+}

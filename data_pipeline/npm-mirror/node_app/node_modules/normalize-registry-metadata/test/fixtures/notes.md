@@ -1,0 +1,4 @@
+- twilio.json has a dist-tag pointing to a version that doesnt exist. 
+- classify has ctim and mtime with no time object
+- sealious-www-server has a dist tag pointing to a missing version
+- shelljs has many versions with invalid but cleanable semver 

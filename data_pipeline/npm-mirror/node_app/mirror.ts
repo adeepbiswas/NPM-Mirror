@@ -36,7 +36,7 @@ app.get('/metrics', async (req, res) => {
     res.status(500).end(ex);
   }
 });
-app.listen(8080, () => console.log(`Metrics listening on port 8080.`));
+app.listen(8084, () => console.log(`Metrics listening on port 8084.`));
 
 
 // subscribing to npm changes

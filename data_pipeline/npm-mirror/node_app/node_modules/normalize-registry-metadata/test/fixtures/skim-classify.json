@@ -1,0 +1,56 @@
+{
+   "ctime" : "2010-11-09T23:17:36Z",
+   "_id" : "classify",
+   "_rev" : "1-3ecd0b6775ddbb6d25a11be24dff2071",
+   "maintainers" : [
+      {
+         "name" : "petebrowne",
+         "email" : "me@petebrowne.com"
+      }
+   ],
+   "author" : {
+      "name" : "Pete Browne",
+      "email" : "me@petebrowne.com",
+      "url" : "http://petebrowne.com"
+   },
+   "dist-tags" : {
+      "latest" : "0.10.0"
+   },
+   "description" : "A Ruby-like Module & Class Inheritance Library for Javascript",
+   "mtime" : "2010-11-09T23:17:37Z",
+   "versions" : {
+      "0.10.0" : {
+         "author" : {
+            "name" : "Pete Browne",
+            "email" : "me@petebrowne.com",
+            "url" : "http://petebrowne.com"
+         },
+         "url" : "http://github.com/petebrowne/classify",
+         "_nodeVersion" : "v0.3.1-pre",
+         "ctime" : "2010-11-09T23:17:36Z",
+         "_id" : "classify@0.10.0",
+         "main" : "./dist/classify",
+         "dist" : {
+            "tarball" : "http://registry.npmjs.org/classify/-/classify-0.10.0.tgz",
+            "shasum" : "e47bd4a7e7e6ac2933a2cf2dc92a1562fd6d73ff"
+         },
+         "name" : "classify",
+         "_npmVersion" : "0.2.7-2",
+         "_nodeSupported" : true,
+         "engines" : {
+            "node" : "*"
+         },
+         "description" : "A Ruby-like Module & Class Inheritance Library for Javascript",
+         "keywords" : [
+            "class",
+            "inheritance",
+            "module",
+            "client",
+            "browser"
+         ],
+         "version" : "0.10.0",
+         "mtime" : "2010-11-09T23:17:36Z"
+      }
+   },
+   "name" : "classify"
+}

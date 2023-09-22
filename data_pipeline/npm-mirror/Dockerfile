@@ -7,6 +7,13 @@ RUN apt-get update && apt-get install -y parallel
 # Set the working directory in the container
 WORKDIR /npm-mirror
 
+# install nodejs and npm
+RUN apt-get install -y nodejs npm
+
+# Install TypeScript globally
+RUN npm install -g typescript
+RUN npm install -g ts-node
+
 # Copy the requirements file into the container
 COPY requirements.txt .
 
@@ -21,6 +28,9 @@ COPY ./app ./app
 
 # Copy the rest of the application code into the container
 COPY ./dbdata ./dbdata
+
+# Copy the rest of the application code into the container
+COPY ./node_app ./node_app
 
 # Copy the shell script
 COPY run_scripts.sh .

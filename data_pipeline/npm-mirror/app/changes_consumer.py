@@ -18,8 +18,6 @@ from dotenv import load_dotenv
 LOCAL_PACKAGE_DIR = "temp_packages"
 REMOTE_PACKAGE_DIR = "packages"
 MAX_SIZE = 10e+6
-# DB_USER = 'admin'
-# DB_PASSWORD = 'opensesame123'
 DATABASE_NAME = 'npm-mirror'
 KAFKA_TOPIC_NUM_PARTITIONS = 12
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
@@ -66,7 +64,7 @@ kafka_consumer = Consumer({
     "bootstrap.servers": "broker-npm:9092",
     "group.id": "npm-update-group",
     "auto.offset.reset": "earliest",
-    "max.partition.fetch.bytes": 5242880  # 5 MB in bytes
+    "max.partition.fetch.bytes": 10485760  # 10 MB in bytes
 })
 kafka_consumer.subscribe(["npm-changes"])
 
@@ -161,33 +159,8 @@ def download_document_and_package(change, package_name):
             # Save the updated (latest) package as a tar file in temporary local directory
             latest = doc['dist-tags']['latest']
             tarball_url = doc['versions'][latest]['dist']['tarball']
-            # tarball_url = f"https://registry.npmjs.org/{package_name}/-/{package_name}-{doc['dist-tags']['latest']}.tgz"
             tarball_filename = f"{package_name}_package.tgz"
             tarball_path = os.path.join(package_dir, tarball_filename)
-            
-            # print(tarball_url)
-            
-            # # Send a HEAD request to get the metadata (including content length)
-            # response = requests.head(tarball_url)
-
-            # # Check if the request was successful (status code 200)
-            # if response.status_code == 200:
-            #     # Get the content length from the 'Content-Length' header
-            #     content_length = int(response.headers['Content-Length'])
-                
-            #     # Convert the size to a human-readable format (e.g., MB or GB)
-            #     size_in_bytes = content_length
-            #     size_in_kb = size_in_bytes / 1024
-            #     size_in_mb = size_in_kb / 1024
-            #     size_in_gb = size_in_mb / 1024
-
-            #     # Print the size in different units
-            #     print(f"Size in bytes: {size_in_bytes} bytes")
-            #     print(f"Size in kilobytes: {size_in_kb:.2f} KB")
-            #     print(f"Size in megabytes: {size_in_mb:.2f} MB")
-            #     print(f"Size in gigabytes: {size_in_gb:.2f} GB")
-            # else:
-            #     print(f"Failed to fetch metadata. Status code: {response.status_code}")
             
             response = requests.get(tarball_url)
             if response.status_code == 200:
@@ -271,7 +244,6 @@ def compress_files(raw_package_name, package_name, revision_id, doc_path, tarbal
 # Function to save the processed change details in our own database
 def store_change_details(change, db, zip_path):
     # Store the important details regarding the change in the local CouchDB database.
-
     package_name = change['id']
     change_seq_id = change['seq']
     package_revision_id = change['doc']['_rev']
@@ -362,10 +334,6 @@ def process_changes_async(db):
         
         change = json.loads(msg.value())
         
-        # with shared_resource_lock:
-        #     downloadQueueLength.set(kafka_consumer.assignment()[0].high-watermark)
-        
-        # executor.submit(process_change, db, change)
         try:
             process_change(db, change)
             log_message = "Change from kafka stream processed."

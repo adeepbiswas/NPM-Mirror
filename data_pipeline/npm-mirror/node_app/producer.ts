@@ -96,7 +96,7 @@ let changeProcessor = new Writable({
         normalize(change)
 
         console.log("sending change to kafka");
-        produceMessages(topicName, JSON.stringify(change));
+        produceMessages(topicName, JSON.stringify(change), change.seq, change.id);
         // produceMessages(topicName, change);
 
         // var promise
@@ -122,7 +122,7 @@ function pkgDir(pkgId: string) {
     return path.join(config.targetDir, pkgId)
 }
 
-async function produceMessages(topicName: string, message) {
+async function produceMessages(topicName: string, message, change_seq, change_id) {
     try {
         await producer.connect();
     
@@ -138,18 +138,19 @@ async function produceMessages(topicName: string, message) {
         await producer.send({
             topic: topicName,
             messages : [{
-                key: message.seq,
+                key: String(change_seq),
                 value: message}],
         });
     
-        console.log('Change added successfully - ', message.seq);
+        console.log('Change added successfully - ', change_seq);
     } catch (error) {
-        console.error('Change message too large, skipped :', message.seq);
+        console.error('Change message too large, skipped :', change_seq);
         await producer.send({
             topic: topicName3,
             messages : [{
-                key: message.seq,
-                value: message.seq}],
+                // key: change_seq,
+                value: JSON.stringify({ 'Change Seq ID': String(change_seq), 'Package Name': String(change_id) })
+            }],
         });
     } finally {
         await producer.disconnect();
@@ -236,7 +237,7 @@ async function checkNewestSeq() {
     try {
         const r = await getJSON(config.couchdb)
         if (r && r.update_seq) {
-            console.log("---- latest seq: "+r.update_seq)
+            console.log("---- latest seq on NPM Registry: "+r.update_seq)
             newestSeq.set(r.update_seq)
         }
     } catch (e) {}

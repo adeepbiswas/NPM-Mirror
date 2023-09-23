@@ -332,8 +332,8 @@ def process_changes_async(db):
                 break
             log_message = "Stream empty."
             print(log_message)
-            kafka_producer.produce("run_logs", value=log_message)
-            kafka_producer.flush()
+            # kafka_producer.produce("run_logs", value=log_message)
+            # kafka_producer.flush()
             continue
         
         change = json.loads(msg.value())

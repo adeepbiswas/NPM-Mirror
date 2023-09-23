@@ -48,8 +48,8 @@ const topicName = 'npm-changes';
 createTopicIfNotExists(topicName);
 const topicName2 = 'run_logs'; 
 createTopicIfNotExists(topicName2);
-// const topicName3 = 'temp_topic'; 
-// createTopicIfNotExists(topicName3);
+const topicName3 = 'skipped_changes'; 
+createTopicIfNotExists(topicName3);
 
 // initializing
 import config from './config.json';
@@ -142,9 +142,15 @@ async function produceMessages(topicName: string, message) {
                 value: message}],
         });
     
-        console.log('Messages sent successfully');
+        console.log('Change added successfully - ', message.seq);
     } catch (error) {
-        console.error('Error producing messages:', error);
+        console.error('Change message too large, skipped :', message.seq);
+        await producer.send({
+            topic: topicName3,
+            messages : [{
+                key: message.seq,
+                value: message.seq}],
+        });
     } finally {
         await producer.disconnect();
     }

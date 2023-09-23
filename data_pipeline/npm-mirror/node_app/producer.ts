@@ -48,8 +48,8 @@ const topicName = 'npm-changes';
 createTopicIfNotExists(topicName);
 const topicName2 = 'run_logs'; 
 createTopicIfNotExists(topicName2);
-const topicName3 = 'temp_topic'; 
-createTopicIfNotExists(topicName3);
+// const topicName3 = 'temp_topic'; 
+// createTopicIfNotExists(topicName3);
 
 // initializing
 import config from './config.json';

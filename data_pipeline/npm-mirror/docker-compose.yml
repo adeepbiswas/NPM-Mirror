@@ -110,7 +110,7 @@ services:
     volumes:
       # - /NPM/packages:/packages
       # - ../../../../../../NPM/packages:/npm-mirror/packages
-      - ../packages:/packages
+      - ../packages:/npm-mirror/packages
 
 # volumes:  
 #   kafka-jmx-volume:

@@ -364,6 +364,8 @@ if __name__ == '__main__':
     # start_http_server(8000)
 
     # Create or connect to our database
+    users_db = create_or_connect_db(server, '_users')
+    replicator_db = create_or_connect_db(server, '_replicator')
     db = create_or_connect_db(server, DATABASE_NAME)
 
     # Start asynchronous processing of changes

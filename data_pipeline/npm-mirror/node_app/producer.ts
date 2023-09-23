@@ -10,6 +10,7 @@ import express from 'express';
 import https from 'https';
 import bent from 'bent'
 import { Kafka, KafkaConfig } from 'kafkajs';
+const { CompressionTypes } = require('kafkajs')
 
 //kafka 
 const kafkaConfig: KafkaConfig = { brokers: ['broker-npm:9092'] }
@@ -137,6 +138,7 @@ async function produceMessages(topicName: string, message, change_seq, change_id
     
         await producer.send({
             topic: topicName,
+            compression: CompressionTypes.GZIP,
             messages : [{
                 key: String(change_seq),
                 value: message}],

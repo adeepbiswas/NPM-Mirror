@@ -165,6 +165,30 @@ def download_document_and_package(change, package_name):
             tarball_filename = f"{package_name}_package.tgz"
             tarball_path = os.path.join(package_dir, tarball_filename)
             
+            # print(tarball_url)
+            
+            # # Send a HEAD request to get the metadata (including content length)
+            # response = requests.head(tarball_url)
+
+            # # Check if the request was successful (status code 200)
+            # if response.status_code == 200:
+            #     # Get the content length from the 'Content-Length' header
+            #     content_length = int(response.headers['Content-Length'])
+                
+            #     # Convert the size to a human-readable format (e.g., MB or GB)
+            #     size_in_bytes = content_length
+            #     size_in_kb = size_in_bytes / 1024
+            #     size_in_mb = size_in_kb / 1024
+            #     size_in_gb = size_in_mb / 1024
+
+            #     # Print the size in different units
+            #     print(f"Size in bytes: {size_in_bytes} bytes")
+            #     print(f"Size in kilobytes: {size_in_kb:.2f} KB")
+            #     print(f"Size in megabytes: {size_in_mb:.2f} MB")
+            #     print(f"Size in gigabytes: {size_in_gb:.2f} GB")
+            # else:
+            #     print(f"Failed to fetch metadata. Status code: {response.status_code}")
+            
             response = requests.get(tarball_url)
             if response.status_code == 200:
                 with open(tarball_path, 'wb') as tarball_file:

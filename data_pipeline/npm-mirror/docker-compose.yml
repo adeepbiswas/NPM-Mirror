@@ -7,8 +7,8 @@ services:
     ports: 
       - "5984:5984"
     environment:
-      - COUCHDB_USER=${DB_USER} #admin
-      - COUCHDB_PASSWORD=${DB_PASSWORD} #opensesame123
+      - COUCHDB_USER=${DB_USER} 
+      - COUCHDB_PASSWORD=${DB_PASSWORD} 
     volumes:
       - ./dbdata:/opt/couchdb/data
     networks:
@@ -29,37 +29,30 @@ services:
     container_name: broker-npm
     ports:
       - 9092:9092
-      # - 29092:29092 ####
-      # - 29103:29101
     depends_on:
       - zookeeper-npm
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-npm:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,PLAINTEXT_INTERNAL://broker-npm:9092 ####
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,PLAINTEXT_INTERNAL://broker-npm:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 10485760 # 10MB
       KAFKA_LOG_RETENTION_HOURS: 72
-      # EXTRA_ARGS: -javaagent:/usr/share/jmx_exporter/jmx_prometheus_javaagent-0.17.0.jar=29101:/usr/share/jmx_exporter/kafka-broker.yaml  
     networks:
       - npm-network
-    # volumes:      
-    #   - ./jmx-exporter:/usr/share/jmx_exporter/      
-    #   - kafka-jmx-volume:/jmx-exporter
 
   kafka-exporter-npm:
-    # image: danielqsj/kafka-exporter:latest
     image: docker.io/alesj/kafka_exporter:fork2
     container_name: kafka-exporter-npm
     ports:
-      - 9308:9308  # Expose Kafka Exporter's metrics endpoint
+      - 9308:9308  
     depends_on:
       - broker-npm
     environment:
-      KAFKA_BROKER: "broker-npm:9092"  # Address of your Kafka broker
+      KAFKA_BROKER: "broker-npm:9092" 
     networks:
       - npm-network
 
@@ -78,8 +71,6 @@ services:
       KAFKA_CLUSTERS_0_METRICS_TYPE: PROMETHEUS
     networks:
       - npm-network
-    # volumes:
-    #   - ./config.yml:/etc/kafkaui/dynamic_config.yaml
 
   prometheus:
     image: prom/prometheus
@@ -109,12 +100,9 @@ services:
     networks:
       - npm-network
     volumes:
-      # - /NPM/packages:/packages
       # - ../../../../../../NPM/packages:/npm-mirror/packages
       - ../packages:/npm-mirror/packages
 
-# volumes:  
-#   kafka-jmx-volume:
 networks:
   npm-network:
     driver: bridge

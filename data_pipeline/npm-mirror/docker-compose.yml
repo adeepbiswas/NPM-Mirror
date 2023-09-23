@@ -13,6 +13,8 @@ services:
       - ./dbdata:/opt/couchdb/data
     networks:
       - npm-network
+    logging:
+      driver: none #to suppress log messages while doing docker compose up
 
   zookeeper-npm:
     image: confluentinc/cp-zookeeper:7.3.0
@@ -43,6 +45,8 @@ services:
       KAFKA_LOG_RETENTION_HOURS: 72
     networks:
       - npm-network
+    logging:
+      driver: none #to suppress log messages while doing docker compose up
 
   kafka-exporter-npm:
     image: docker.io/alesj/kafka_exporter:fork2
@@ -71,6 +75,8 @@ services:
       KAFKA_CLUSTERS_0_METRICS_TYPE: PROMETHEUS
     networks:
       - npm-network
+    logging:
+      driver: none #to suppress log messages while doing docker compose up
 
   prometheus:
     image: prom/prometheus

@@ -107,8 +107,8 @@ services:
     networks:
       - npm-network
     volumes:
-      # - ../../../../../../NPM/packages:/npm-mirror/packages
-      - ../packages:/npm-mirror/packages
+      - ../../../../../../NPM/packages:/npm-mirror/packages
+      # - ../packages:/npm-mirror/packages
       - ./update_seq:/npm-mirror/update_seq
 
 networks:

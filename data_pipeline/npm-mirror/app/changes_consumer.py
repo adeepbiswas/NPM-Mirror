@@ -205,26 +205,42 @@ def get_zip_creation_time(zip_filename):
     zip_creation_time = os.path.getctime(zip_filename)
     return zip_creation_time
 
-#deletes the oldest zip version if there are already 3 or more versions present
+# deletes the oldest zip version if there are already 3 or more versions present unless
+# the next zip has a deletion type change
 def delete_oldest_zip(directory):
     zip_files = [file for file in os.listdir(directory) if file.lower().endswith('.zip')]
 
     if len(zip_files) >= OLD_PACKAGE_VERSIONS_LIMIT:
         zip_file_times = [(zip_file, get_zip_creation_time(os.path.join(directory, zip_file))) for zip_file in zip_files]
-        oldest_zip = min(zip_file_times, key=lambda x: x[1])[0]
         
-        oldest_zip_path = os.path.join(directory, oldest_zip)
-        os.remove(oldest_zip_path)
-        log_message = f"Deleted the oldest zip file: {oldest_zip}"
-        print(log_message)
-        kafka_producer.produce("run_logs", value=log_message)
-        kafka_producer.flush()
+        # Sort the list of zip files by creation time in ascending order
+        zip_file_times.sort(key=lambda x: x[1])
+        
+        # Iterate through the sorted list
+        for i in range(len(zip_file_times) - 1):
+            zip_file, creation_time = zip_file_times[i]
+            next_zip_file, next_creation_time = zip_file_times[i + 1]
+
+            # Check if the next zip file has 'Deletion' in its name
+            if not re.search(r'Deleted', next_zip_file, re.IGNORECASE):
+                oldest_zip_path = os.path.join(directory, zip_file)
+                os.remove(oldest_zip_path)
+                log_message = f"Deleted the oldest zip file: {zip_file}"
+                print(log_message)
+                kafka_producer.produce("run_logs", value=log_message)
+                kafka_producer.flush()
+                return
 
 # Function to compress the downloaded JSON and tarball into a zip file and store it in remote directory
-def compress_files(raw_package_name, package_name, revision_id, doc_path, tarball_path):
+def compress_files(raw_package_name, package_name, revision_id, doc_path, tarball_path, change):
     package_dir = create_directory_structure(raw_package_name)
     delete_oldest_zip(package_dir)
-    compressed_filename = f"{package_name}_{revision_id}.zip"
+    
+    if change['deleted']:
+        compressed_filename = f"Deleted-{package_name}_{revision_id}.zip"
+    else:
+        compressed_filename = f"{package_name}_{revision_id}.zip"
+        
     zip_path = os.path.join(package_dir, compressed_filename)
     
     with zipfile.ZipFile(zip_path, 'w') as zip_file:
@@ -317,7 +333,7 @@ def process_change(db, change):
     kafka_producer.flush()
     
     if doc_path:
-        zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path)
+        zip_path = compress_files(raw_package_name, package_name, change['doc']['_rev'], doc_path, tarball_path, change)
         # add to moved to remote queue
         kafka_producer.produce("moved_to_remote", value=str(change['seq']))
         kafka_producer.flush()

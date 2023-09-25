@@ -141,13 +141,13 @@ def download_document_and_package(change, package_name):
         
         with open(doc_path, 'w') as doc_file:
             json.dump(doc, doc_file)
-            log_message = "--Saved package JSON"
+            log_message = f"Saved package JSON - {change['seq']}"
             print(log_message)  
             kafka_producer.produce("run_logs", value=log_message)
             kafka_producer.flush()
         if os.path.getsize(doc_path) > MAX_SIZE:
             os.remove(doc_path)
-            log_message = "--Package JSON too large, removed"
+            log_message = f"Package JSON too large, removed - {change['seq']}"
             print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
             kafka_producer.flush()
@@ -166,20 +166,20 @@ def download_document_and_package(change, package_name):
             if response.status_code == 200:
                 with open(tarball_path, 'wb') as tarball_file:
                     tarball_file.write(response.content)
-                log_message = "--Saved Tar file"
+                log_message = f"Saved Tar file - {change['seq']}"
                 print(log_message)
                 kafka_producer.produce("run_logs", value=log_message)
                 kafka_producer.flush()
                 
                 if os.path.getsize(tarball_path) > MAX_SIZE:
                     os.remove(tarball_path)
-                    log_message = "--Tarball too large, removed"
+                    log_message = f"Tarball too large, removed - {change['seq']}"
                     print(log_message)
                     kafka_producer.produce("run_logs", value=log_message)
                     kafka_producer.flush()
                     if doc_path:
                         os.remove(doc_path)
-                        log_message = "--Corresponding JSON removed as well"
+                        log_message = f"Corresponding JSON removed as well - {change['seq']}"
                         print(log_message)
                         kafka_producer.produce("run_logs", value=log_message)
                         kafka_producer.flush()
@@ -189,7 +189,7 @@ def download_document_and_package(change, package_name):
             else:
                 if doc_path:
                     os.remove(doc_path)
-                    log_message = "--Corresponding JSON removed as well"
+                    log_message = f"Corresponding JSON removed as well - {change['seq']}"
                     print(log_message)
                     kafka_producer.produce("run_logs", value=log_message)
                     kafka_producer.flush()
@@ -225,7 +225,7 @@ def delete_oldest_zip(directory):
             if not re.search(r'Deleted', next_zip_file, re.IGNORECASE):
                 oldest_zip_path = os.path.join(directory, zip_file)
                 os.remove(oldest_zip_path)
-                log_message = f"Deleted the oldest zip file: {zip_file}"
+                log_message = f"Too many package versions, Deleted the oldest zip file: {zip_file}"
                 print(log_message)
                 kafka_producer.produce("run_logs", value=log_message)
                 kafka_producer.flush()
@@ -236,7 +236,12 @@ def compress_files(raw_package_name, package_name, revision_id, doc_path, tarbal
     package_dir = create_directory_structure(raw_package_name)
     delete_oldest_zip(package_dir)
     
-    if change['deleted']:
+    package_deleted = False
+    change_keys = list(change.keys())
+    if 'deleted' in change_keys:
+        package_deleted = change['deleted']
+    
+    if package_deleted:
         compressed_filename = f"Deleted-{package_name}_{revision_id}.zip"
     else:
         compressed_filename = f"{package_name}_{revision_id}.zip"
@@ -250,7 +255,7 @@ def compress_files(raw_package_name, package_name, revision_id, doc_path, tarbal
         if tarball_path:
             zip_file.write(tarball_path, os.path.basename(tarball_path))
             os.remove(tarball_path)  # Remove the individual tar file from local (temp) directory after compression
-    log_message = "--Compressed zip saved in remote"
+    log_message = f"Compressed zip saved in remote - {change['seq']}"
     print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
     kafka_producer.flush()
@@ -301,7 +306,7 @@ def store_change_details(change, db, zip_path):
         'package_distribution_tags': package_distribution_tags
     }
     db.save(data)
-    log_message = "--Change record added to database"
+    log_message = f"Change record added to database - {change['seq']}"
     print(log_message)
     kafka_producer.produce("run_logs", value=log_message)
     kafka_producer.flush()
@@ -370,12 +375,12 @@ def process_changes_async(db):
         
         try:
             process_change(db, change)
-            log_message = "Change from kafka stream processed."
+            log_message = f"Change from kafka stream processed - {change['seq']}"
             print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
             kafka_producer.flush()
         except Exception as e:
-            log_message = f"Error:{e}, skipped change"
+            log_message = f"Error:{e}, skipped change - {change['seq']}"
             print(log_message)
             kafka_producer.produce("run_logs", value=log_message)
             kafka_producer.flush()

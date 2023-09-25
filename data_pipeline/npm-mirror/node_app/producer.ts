@@ -96,7 +96,7 @@ let changeProcessor = new Writable({
 
         normalize(change)
 
-        console.log("sending change to kafka");
+        console.log("Sending change to kafka - ", change.seq);
         produceMessages(topicName, JSON.stringify(change), change.seq, change.id);
   
         // keeping last processed id
@@ -126,8 +126,10 @@ async function produceMessages(topicName: string, message, change_seq, change_id
                 value: message}],
         });
     
-        console.log('Change added successfully - ', change_seq);
+        console.log('Change added to kafka - ', change_seq);
     } catch (error) {
+        await producer.connect();
+
         console.error('Change message too large, skipped :', change_seq);
         await producer.send({
             topic: topicName3,
@@ -136,7 +138,7 @@ async function produceMessages(topicName: string, message, change_seq, change_id
             }],
         });
     } finally {
-        await producer.disconnect();
+        // await producer.disconnect();
     }
 }
 

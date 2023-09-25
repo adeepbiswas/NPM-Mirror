@@ -249,7 +249,20 @@ def store_change_details(change, db, zip_path):
     package_revision_id = change['doc']['_rev']
     package_latest_version = change['doc']['dist-tags']['latest']
     package_versions_count = len(change['doc']['versions'].keys())
+    
+    package_latest_authors = None
+    package_latest_maintainers = None
+    package_latest_dependencies = None
+    if 'author' in change['doc']['versions'][package_latest_version].keys():
+        package_latest_authors = change['doc']['versions'][package_latest_version]['author']
+    if 'maintainers' in change['doc']['versions'][package_latest_version].keys():
+    package_latest_maintainers = change['doc']['versions'][package_latest_version]['maintainers']
+    if 'dependencies' in change['doc']['versions'][package_latest_version].keys():
+    package_latest_dependencies = change['doc']['versions'][package_latest_version]['dependencies']
+    
+    package_modification_count = len(change['doc']['time'].keys())
     package_latest_change_time = change['doc']['time'][package_latest_version]
+    package_distribution_tags = change['doc']['dist-tags']
     
     package_deleted = False
     change_keys = list(change.keys())
@@ -262,9 +275,14 @@ def store_change_details(change, db, zip_path):
         'package_revision_id': package_revision_id,
         'package_latest_version': package_latest_version,
         'package_versions_count': package_versions_count,
+        'package_modification_count': package_modification_count,
         'package_latest_change_time': package_latest_change_time,
+        'package_latest_authors': package_latest_authors,
+        'package_latest_maintainers': package_latest_maintainers,
+        'package_latest_dependencies': package_latest_dependencies,
         'change_save_path': zip_path,
-        'package_deleted' : package_deleted
+        'package_deleted' : package_deleted,
+        'package_distribution_tags': package_distribution_tags
     }
     db.save(data)
     log_message = "--Change record added to database"
@@ -327,7 +345,7 @@ def process_changes_async(db):
                 kafka_producer.flush()
                 break
             log_message = "Stream empty."
-            print(log_message)
+            # print(log_message)
             # kafka_producer.produce("run_logs", value=log_message)
             # kafka_producer.flush()
             continue

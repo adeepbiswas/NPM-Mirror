@@ -56,7 +56,6 @@ createTopicIfNotExists(topicName3);
 import config from './config.json';
 try {
     const seq_store = JSON.parse(readFileSync(config.update_seq_store).toString())
-    console.log("Stored seq - ", seq_store.update_seq)
     if (seq_store && seq_store.update_seq) { // && (seq_store.update_seq > config.update_seq)) {
         console.log(`Starting with stored ${seq_store.update_seq} rather than config's ${config.update_seq} seq`)
         config.update_seq = seq_store.update_seq

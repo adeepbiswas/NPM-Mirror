@@ -1,7 +1,7 @@
 {
     "couchdb": "https://replicate.npmjs.com/registry",
     "update_seq": "now",
-    "update_seq_store": "./update_seq.json",
+    "update_seq_store": "./update_seq/update_seq.json",
     "download_queue_store": "./download_queue",
     "targetDir": "/home/ckaestne/tmp/data",
     "max_tar_size": 10485760 

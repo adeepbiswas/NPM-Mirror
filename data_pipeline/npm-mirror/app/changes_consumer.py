@@ -256,9 +256,9 @@ def store_change_details(change, db, zip_path):
     if 'author' in change['doc']['versions'][package_latest_version].keys():
         package_latest_authors = change['doc']['versions'][package_latest_version]['author']
     if 'maintainers' in change['doc']['versions'][package_latest_version].keys():
-    package_latest_maintainers = change['doc']['versions'][package_latest_version]['maintainers']
+        package_latest_maintainers = change['doc']['versions'][package_latest_version]['maintainers']
     if 'dependencies' in change['doc']['versions'][package_latest_version].keys():
-    package_latest_dependencies = change['doc']['versions'][package_latest_version]['dependencies']
+        package_latest_dependencies = change['doc']['versions'][package_latest_version]['dependencies']
     
     package_modification_count = len(change['doc']['time'].keys())
     package_latest_change_time = change['doc']['time'][package_latest_version]

@@ -32,6 +32,9 @@ COPY ./dbdata ./dbdata
 # Copy the rest of the application code into the container
 COPY ./node_app ./node_app
 
+# Copy the rest of the application code into the container
+COPY ./update_seq ./update_seq
+
 # Copy the shell script
 COPY run_scripts.sh .
 

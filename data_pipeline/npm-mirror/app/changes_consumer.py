@@ -22,7 +22,7 @@ DATABASE_NAME = 'npm-mirror'
 KAFKA_TOPIC_NUM_PARTITIONS = 12
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
 SUBDIRECTORY_HASH_LENGTH = 3
-OLD_PACKAGE_VERSIONS_LIMIT = 3 #determines max how many package versions to keep
+OLD_PACKAGE_VERSIONS_LIMIT = 10 #determines max how many package versions to keep
 
 # Specify the path to the .env file in the main directory
 dotenv_path = '.env'

@@ -22,7 +22,7 @@ DATABASE_NAME = 'npm-mirror'
 KAFKA_TOPIC_NUM_PARTITIONS = 12
 KAFKA_TOPIC_REPLICATION_FACTOR = 1
 SUBDIRECTORY_HASH_LENGTH = 3
-OLD_PACKAGE_VERSIONS_LIMIT = 10 #determines max how many package versions to keep
+OLD_PACKAGE_VERSIONS_LIMIT = 5 #determines max how many package versions to keep
 
 # Specify the path to the .env file in the main directory
 dotenv_path = '.env'
@@ -234,7 +234,13 @@ def delete_oldest_zip(directory):
 # Function to compress the downloaded JSON and tarball into a zip file and store it in remote directory
 def compress_files(raw_package_name, package_name, revision_id, doc_path, tarball_path, change):
     package_dir = create_directory_structure(raw_package_name)
-    delete_oldest_zip(package_dir)
+    
+    # delete older package versions only if the difference in version count and modification count is 2
+    # implying no older package versions were removed from the json
+    package_versions_count = len(change['doc']['versions'].keys())
+    package_modification_count = len(change['doc']['time'].keys())
+    if (package_modification_count - package_versions_count ) == 2:
+        delete_oldest_zip(package_dir)
     
     package_deleted = False
     change_keys = list(change.keys())

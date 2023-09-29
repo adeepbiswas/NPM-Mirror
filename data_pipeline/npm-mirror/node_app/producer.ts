@@ -221,7 +221,6 @@ async function produceMessages(topicName: string, message, change_seq, change_id
 
 //once ever 5 min check the newest seq number of the database to see how far we are behind
 let init_lag = null;
-let flag = true;
 const getJSON = bent('json')
 async function checkNewestSeq() {
     try {
@@ -229,11 +228,10 @@ async function checkNewestSeq() {
         if (r && r.update_seq) {
             console.log("---- latest seq on NPM Registry: "+r.update_seq)
             newestSeq.set(r.update_seq)
-            if (last_seq !== null && flag == true)
+            if (last_seq !== null && init_lag == null)
             {
                 init_lag = r.update_seq - last_seq;
                 console.log("Initial Lag- ", init_lag);
-                flag = false;
             }
             if (last_seq !== null && init_lag !== null && ((r.update_seq - last_seq) > (init_lag + 200))) {
                 console.log("Lag increased, Restarting producer...");

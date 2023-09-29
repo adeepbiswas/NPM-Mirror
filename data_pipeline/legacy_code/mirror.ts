@@ -11,7 +11,7 @@ import https from 'https';
 import bent from 'bent'
 
 // initializing
-import config from './config.json';
+import config from '../npm-mirror/node_app/config.json';
 try {
   const seq_store = JSON.parse(readFileSync(config.update_seq_store).toString())
   if (seq_store && seq_store.update_seq && (seq_store.update_seq > config.update_seq)) {

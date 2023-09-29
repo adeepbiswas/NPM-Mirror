@@ -7,5 +7,5 @@
       "esModuleInterop": true
 
     },
-    "include": ["./*.ts"]
+    "include": ["./*.ts", "../../legacy_code/mirror.ts"]
   }

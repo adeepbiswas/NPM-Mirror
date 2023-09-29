@@ -13,6 +13,7 @@ RUN apt-get install -y nodejs npm
 # Install TypeScript globally
 RUN npm install -g typescript
 RUN npm install -g ts-node
+RUN npm install -g pm2
 
 # Copy the requirements file into the container
 COPY requirements.txt .

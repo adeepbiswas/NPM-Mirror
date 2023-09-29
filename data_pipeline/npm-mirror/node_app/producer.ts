@@ -18,6 +18,7 @@ const kafka = new Kafka(kafkaConfig)
 
 const producer = kafka.producer();
 const admin = kafka.admin();
+const consumer = kafka.consumer({ groupId: 'last-message' });
 
 async function createTopicIfNotExists(topicName: string) {
     try {
@@ -52,8 +53,78 @@ createTopicIfNotExists(topicName2);
 const topicName3 = 'skipped_changes'; 
 createTopicIfNotExists(topicName3);
 
-// initializing
+async function getLastMessageFromTopic(topic) {
+    await consumer.connect();
+    await consumer.subscribe({ topic, fromBeginning: false });
+
+    let lastMessage = null;
+  
+    await consumer.run({
+        eachMessage: async ({ message }) => {
+            lastMessage = message.value;
+            console.log("last message - ", lastMessage.seq);
+            // consumer.disconnect(); // Disconnect the consumer after reading the last message
+        },
+    });
+
+    console.log("last message - ", lastMessage.seq);
+    // Check if lastMessage or its seq property is available, and return accordingly
+    if (lastMessage && lastMessage.seq !== undefined) {
+        console.log("--------------------if entered-------------------------------------- ");
+        return lastMessage.seq;
+    } else {
+        return null;
+    }
+}
+
 import config from './config.json';
+
+// initialization from kafka stream
+async function seq_initialization() {
+    // try {
+    const topic = 'npm-changes';
+    const seq = await getLastMessageFromTopic(topic);
+    console.log("Seq ----------- ", seq);
+
+    if (seq !== null) {
+        console.log(`Starting with last stored seq value ${seq} from kafka rather than config's ${config.update_seq} seq`);
+        config.update_seq = seq as string;
+    } else {
+        console.log("No stored seq found.");
+    }
+    // } catch (e) { }
+    console.log(`Tracking changes to ${config.couchdb} from ${config.update_seq}`)
+}
+// seq_initialization()
+
+// async function getLastMessageFromTopic(topic) {
+//     await consumer.connect();
+//     await consumer.subscribe({ topic, fromBeginning: false });
+  
+//     return new Promise((resolve, reject) => {
+//         let lastMessage = null;
+  
+//         consumer.run({
+//             eachMessage: async ({ topic, partition, message }) => {
+//                 lastMessage = message.value;
+//                 console.log("last message - ", lastMessage.seq);
+//                 // You can choose to disconnect the consumer here if needed
+//                 // consumer.disconnect();
+//             },
+//         }).then(() => {
+//             console.log("last message - ", lastMessage.seq);
+//             // Check if lastMessage or its seq property is available, and resolve the Promise accordingly
+//             if (lastMessage && lastMessage.seq !== undefined) {
+//                 console.log("--------------------if entered-------------------------------------- ");
+//                 resolve(lastMessage.seq);
+//             } else {
+//                 resolve(null);
+//             }
+//         }).catch(reject);
+//     });
+// }
+
+// initializing last seq from file
 try {
     const seq_store = JSON.parse(readFileSync(config.update_seq_store).toString())
     if (seq_store && seq_store.update_seq) { // && (seq_store.update_seq > config.update_seq)) {
@@ -88,20 +159,25 @@ var changes = new ChangesStream({
     since: config.update_seq
 });
 
+let last_seq = null;
+
 let changeProcessor = new Writable({
     objectMode: true,
     write: async function(change, ignore, cb) {
         npmUpdateCounter.inc()
-        if (change && change.seq) lastSeq.set(change.seq)
+        if (change && change.seq) {
+        
+            lastSeq.set(change.seq)
 
-        normalize(change)
+            normalize(change)
 
-        console.log("Sending change to kafka - ", change.seq);
-        produceMessages(topicName, JSON.stringify(change), change.seq, change.id);
-  
-        // keeping last processed id
-        await writeFile(config.update_seq_store, `{"update_seq":${change.seq}}`)
-        cb()
+            console.log("Sending change to kafka - ", change.seq);
+            produceMessages(topicName, JSON.stringify(change), change.seq, change.id);
+    
+            // keeping last processed id
+            await writeFile(config.update_seq_store, `{"update_seq":${change.seq}}`)
+            cb()
+        }
     }
 })
 changes.pipe(changeProcessor)
@@ -139,10 +215,13 @@ async function produceMessages(topicName: string, message, change_seq, change_id
         });
     } finally {
         // await producer.disconnect();
+        last_seq = change_seq
     }
 }
 
 //once ever 5 min check the newest seq number of the database to see how far we are behind
+let init_lag = null;
+let flag = true;
 const getJSON = bent('json')
 async function checkNewestSeq() {
     try {
@@ -150,8 +229,18 @@ async function checkNewestSeq() {
         if (r && r.update_seq) {
             console.log("---- latest seq on NPM Registry: "+r.update_seq)
             newestSeq.set(r.update_seq)
+            if (last_seq !== null && flag == true)
+            {
+                init_lag = r.update_seq - last_seq;
+                console.log("Initial Lag- ", init_lag);
+                flag = false;
+            }
+            if (last_seq !== null && init_lag !== null && ((r.update_seq - last_seq) > (init_lag + 200))) {
+                console.log("Lag increased, Restarting producer...");
+                process.exit(1); // Use a custom exit code, like 1, to indicate the need for a restart
+            }
         }
     } catch (e) {}
-    setTimeout(checkNewestSeq, 1000)
+    setTimeout(checkNewestSeq, 10000)
 }
 checkNewestSeq()

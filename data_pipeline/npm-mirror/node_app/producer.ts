@@ -53,29 +53,29 @@ createTopicIfNotExists(topicName2);
 const topicName3 = 'skipped_changes'; 
 createTopicIfNotExists(topicName3);
 
-async function getLastMessageFromTopic(topic) {
-    await consumer.connect();
-    await consumer.subscribe({ topic, fromBeginning: false });
+// async function getLastMessageFromTopic(topic) {
+//     await consumer.connect();
+//     await consumer.subscribe({ topic, fromBeginning: false });
 
-    let lastMessage = null;
+//     let lastMessage = null;
   
-    await consumer.run({
-        eachMessage: async ({ message }) => {
-            lastMessage = message.value;
-            console.log("last message - ", lastMessage.seq);
-            // consumer.disconnect(); // Disconnect the consumer after reading the last message
-        },
-    });
+//     await consumer.run({
+//         eachMessage: async ({ message }) => {
+//             lastMessage = message.value;
+//             console.log("last message - ", lastMessage.seq);
+//             // consumer.disconnect(); // Disconnect the consumer after reading the last message
+//         },
+//     });
 
-    console.log("last message - ", lastMessage.seq);
-    // Check if lastMessage or its seq property is available, and return accordingly
-    if (lastMessage && lastMessage.seq !== undefined) {
-        console.log("--------------------if entered-------------------------------------- ");
-        return lastMessage.seq;
-    } else {
-        return null;
-    }
-}
+//     console.log("last message - ", lastMessage.seq);
+//     // Check if lastMessage or its seq property is available, and return accordingly
+//     if (lastMessage && lastMessage.seq !== undefined) {
+//         console.log("--------------------if entered-------------------------------------- ");
+//         return lastMessage.seq;
+//     } else {
+//         return null;
+//     }
+// }
 
 import config from './config.json';
 
@@ -83,56 +83,43 @@ import config from './config.json';
 async function seq_initialization() {
     // try {
     const topic = 'npm-changes';
-    const seq = await getLastMessageFromTopic(topic);
-    console.log("Seq ----------- ", seq);
+    // const seq = await getLastMessageFromTopic(topic);
+    // const lastMessageJSON = process.argv[2];
+    // const lastMessageJSON = process.env.LAST_MESSAGE;
+    let lastMessage = null;
+    let seq: string | null;
+    try {
+        lastMessage = JSON.parse(readFileSync("./update_seq/kafka_last_message.json").toString())
+    } catch (e) { }
+    
+    if (lastMessage === null) {
+        seq = null;
+    } else {
+        // const lastMessage = JSON.parse(lastMessageJSON);
+        seq = lastMessage.seq;
+        console.log("Seq ----------- ", seq);
+    }
 
     if (seq !== null) {
         console.log(`Starting with last stored seq value ${seq} from kafka rather than config's ${config.update_seq} seq`);
-        config.update_seq = seq as string;
+        config.update_seq = seq as string; //check if string or number needed
     } else {
         console.log("No stored seq found.");
     }
     // } catch (e) { }
-    console.log(`Tracking changes to ${config.couchdb} from ${config.update_seq}`)
 }
-// seq_initialization()
-
-// async function getLastMessageFromTopic(topic) {
-//     await consumer.connect();
-//     await consumer.subscribe({ topic, fromBeginning: false });
-  
-//     return new Promise((resolve, reject) => {
-//         let lastMessage = null;
-  
-//         consumer.run({
-//             eachMessage: async ({ topic, partition, message }) => {
-//                 lastMessage = message.value;
-//                 console.log("last message - ", lastMessage.seq);
-//                 // You can choose to disconnect the consumer here if needed
-//                 // consumer.disconnect();
-//             },
-//         }).then(() => {
-//             console.log("last message - ", lastMessage.seq);
-//             // Check if lastMessage or its seq property is available, and resolve the Promise accordingly
-//             if (lastMessage && lastMessage.seq !== undefined) {
-//                 console.log("--------------------if entered-------------------------------------- ");
-//                 resolve(lastMessage.seq);
-//             } else {
-//                 resolve(null);
-//             }
-//         }).catch(reject);
-//     });
-// }
+seq_initialization()
+console.log(`Tracking changes to ${config.couchdb} from ${config.update_seq}`)
 
 // initializing last seq from file
-try {
-    const seq_store = JSON.parse(readFileSync(config.update_seq_store).toString())
-    if (seq_store && seq_store.update_seq) { // && (seq_store.update_seq > config.update_seq)) {
-        console.log(`Starting with stored ${seq_store.update_seq} rather than config's ${config.update_seq} seq`)
-        config.update_seq = seq_store.update_seq
-    }
-} catch (e) { }
-console.log(`Tracking changes to ${config.couchdb} from ${config.update_seq}`)
+// try {
+//     const seq_store = JSON.parse(readFileSync(config.update_seq_store).toString())
+//     if (seq_store && seq_store.update_seq) { // && (seq_store.update_seq > config.update_seq)) {
+//         console.log(`Starting with stored ${seq_store.update_seq} rather than config's ${config.update_seq} seq`)
+//         config.update_seq = seq_store.update_seq
+//     }
+// } catch (e) { }
+// console.log(`Tracking changes to ${config.couchdb} from ${config.update_seq}`)
 
 // metrics / monitoring
 let npmUpdateCounter = new Counter({ name: "npmmirror_npm_update_counter", help: "number of npm updates processed" })

@@ -10,10 +10,13 @@ WORKDIR /npm-mirror
 # install nodejs and npm
 RUN apt-get install -y nodejs npm
 
+#install kafkacat
+RUN apt-get install -y kafkacat
+
 # Install TypeScript globally
 RUN npm install -g typescript
 RUN npm install -g ts-node
-RUN npm install -g pm2
+# RUN npm install -g kafka-typescript
 
 # Copy the requirements file into the container
 COPY requirements.txt .

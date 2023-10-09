@@ -16,7 +16,7 @@ from confluent_kafka.admin import AdminClient, NewTopic
 from dotenv import load_dotenv
 
 LOCAL_PACKAGE_DIR = "temp_packages"
-REMOTE_PACKAGE_DIR = "packages"
+REMOTE_PACKAGE_DIR = "npm-packages"
 MAX_SIZE = 10e+6
 DATABASE_NAME = 'npm-mirror'
 KAFKA_TOPIC_NUM_PARTITIONS = 12

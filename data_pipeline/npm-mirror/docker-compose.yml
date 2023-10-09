@@ -42,7 +42,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_MESSAGE_MAX_BYTES: 10485760 # 10MB
-      KAFKA_LOG_RETENTION_HOURS: 72
+      KAFKA_LOG_RETENTION_HOURS: 168
       KAFKAJS_NO_PARTITIONER_WARNING: 1
     networks:
       - npm-network
@@ -66,6 +66,7 @@ services:
     image: provectuslabs/kafka-ui:latest
     ports:
       - 8081:8080
+      - 11001:11001
     depends_on:
       - broker-npm
     environment:
@@ -109,7 +110,7 @@ services:
     ports:
       - 8084:8084
     volumes:
-      - ../../../../../../NPM/packages:/npm-mirror/packages
+      - ../../../../../../NPM/npm-packages:/npm-mirror/npm-packages
       # - ../packages:/npm-mirror/packages
       - ./update_seq:/npm-mirror/update_seq
 

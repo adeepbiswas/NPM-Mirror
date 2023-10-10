@@ -121,6 +121,16 @@ To detach from tmux session-
 Control + B followed by D
 ```
 
+# Producer Restart Logic
+
+Sometimes the Kafka producer might get disconnected from the NPM API and stop reading new changes after having made too many requests. In such a case, the producer automatically gets restarted if the lag between the last seq ID sent to kafka broker and the last seq ID in the NPM grows by more than 200 from the initial lag.
+
+To print the initial lag at the time when the application is started- 
+```shell
+cd /home/adeepb/data_pipeline/NPM-Mirror/data_pipeline/npm-mirror
+docker-compose logs npm-mirror | grep 'Initial Lag' | awk '{print}'
+```
+
 # View / Monitor Running Containers
 
   1. View Database UI- http://127.0.0.1:5984/_utils/

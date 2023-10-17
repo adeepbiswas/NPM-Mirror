@@ -53,41 +53,14 @@ createTopicIfNotExists(topicName2);
 const topicName3 = 'skipped_changes'; 
 createTopicIfNotExists(topicName3);
 
-// async function getLastMessageFromTopic(topic) {
-//     await consumer.connect();
-//     await consumer.subscribe({ topic, fromBeginning: false });
-
-//     let lastMessage = null;
-  
-//     await consumer.run({
-//         eachMessage: async ({ message }) => {
-//             lastMessage = message.value;
-//             console.log("last message - ", lastMessage.seq);
-//             // consumer.disconnect(); // Disconnect the consumer after reading the last message
-//         },
-//     });
-
-//     console.log("last message - ", lastMessage.seq);
-//     // Check if lastMessage or its seq property is available, and return accordingly
-//     if (lastMessage && lastMessage.seq !== undefined) {
-//         console.log("--------------------if entered-------------------------------------- ");
-//         return lastMessage.seq;
-//     } else {
-//         return null;
-//     }
-// }
-
 import config from './config.json';
 
 // initialization from kafka stream
 async function seq_initialization() {
-    // try {
     const topic = 'npm-changes';
-    // const seq = await getLastMessageFromTopic(topic);
-    // const lastMessageJSON = process.argv[2];
-    // const lastMessageJSON = process.env.LAST_MESSAGE;
     let lastMessage = null;
     let seq: string | null;
+    let seq_store = null;
     try {
         lastMessage = JSON.parse(readFileSync("./update_seq/kafka_last_message.json").toString())
     } catch (e) { }
@@ -100,9 +73,20 @@ async function seq_initialization() {
         console.log("Seq ----------- ", seq);
     }
 
+    try {
+        seq_store = JSON.parse(readFileSync(config.update_seq_store).toString())
+    } catch (e) { }
+
     if (seq !== null) {
-        console.log(`Starting with last stored seq value ${seq} from kafka rather than config's ${config.update_seq} seq`);
-        config.update_seq = seq as string; //check if string or number needed
+        if (seq_store && seq_store.update_seq && (seq_store.update_seq > seq)) {
+            console.log(`Starting with stored ${seq_store.update_seq} rather than config's ${config.update_seq} seq`)
+            config.update_seq = seq_store.update_seq
+        }
+        else
+        {
+            console.log(`Starting with last stored seq value ${seq} from kafka rather than config's ${config.update_seq} seq`);
+            config.update_seq = seq as string; //check if string or number needed
+        }
     } else {
         console.log("No stored seq found.");
     }

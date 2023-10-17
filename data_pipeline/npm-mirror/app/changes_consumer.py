@@ -207,7 +207,7 @@ def get_zip_creation_time(zip_filename):
     return zip_creation_time
 
 def log_deletions(deleted_zip_path):
-    deleted_zip_path = extract_relative_path(deleted_zip_path)
+    # deleted_zip_path = extract_relative_path(deleted_zip_path)
     filename = "../../../../../../NPM/deleted_zips.txt"
     try:
         data = {

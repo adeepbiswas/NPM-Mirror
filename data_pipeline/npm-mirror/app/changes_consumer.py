@@ -32,6 +32,7 @@ load_dotenv(dotenv_path)
 # Access the variables
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
+deletion_db = None
 
 # Create prmethius metrics to track time spent and requests made.
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
@@ -205,6 +206,17 @@ def get_zip_creation_time(zip_filename):
     zip_creation_time = os.path.getctime(zip_filename)
     return zip_creation_time
 
+def log_deletions(deleted_zip_path):
+    deleted_zip_path = extract_relative_path(deleted_zip_path)
+    filename = "../../../../../../NPM/deleted_zips.txt"
+    try:
+        data = {
+            'deleted_zip_path': deleted_zip_path,
+        }
+        deletion_db.save(data)
+    except Exception as e:
+        pass
+
 # deletes the oldest zip version if there are already 3 or more versions present unless
 # the next zip has a deletion type change
 def delete_oldest_zip(directory):
@@ -224,6 +236,7 @@ def delete_oldest_zip(directory):
             # Check if the next zip file has 'Deletion' in its name
             if not re.search(r'Deleted', next_zip_file, re.IGNORECASE):
                 oldest_zip_path = os.path.join(directory, zip_file)
+                log_deletions(oldest_zip_path)
                 os.remove(oldest_zip_path)
                 log_message = f"Too many package versions, Deleted the oldest zip file: {zip_file}"
                 print(log_message)
@@ -404,6 +417,7 @@ if __name__ == '__main__':
     users_db = create_or_connect_db(server, '_users')
     replicator_db = create_or_connect_db(server, '_replicator')
     db = create_or_connect_db(server, DATABASE_NAME)
+    deletion_db = create_or_connect_db(server, 'deleted-zips')
 
     # Start asynchronous processing of changes
     process_changes_async(db)

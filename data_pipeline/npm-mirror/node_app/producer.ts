@@ -224,6 +224,10 @@ async function checkNewestSeq() {
                 console.log("Lag increased, Restarting producer...");
                 process.exit(1); // Use a custom exit code, like 1, to indicate the need for a restart
             }
+            if (last_seq !== null && init_lag !== null && ((r.update_seq - last_seq) < (init_lag - 200))) {
+                init_lag = (r.update_seq - last_seq)
+                console.log("Lag decreased, updating init lag - ", init_lag);
+            }
         }
     } catch (e) {}
     setTimeout(checkNewestSeq, 10000)

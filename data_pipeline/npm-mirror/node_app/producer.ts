@@ -42,6 +42,7 @@ async function createTopicIfNotExists(topicName: string) {
         }
     } catch (error) {
         console.error('Error creating/checking topic:', error);
+        process.exit(1);
     } finally {
         await admin.disconnect();
     }
@@ -54,6 +55,7 @@ const topicName3 = 'skipped_changes';
 createTopicIfNotExists(topicName3);
 
 import config from './config.json';
+import { run } from 'node:test';
 
 // initialization from kafka stream
 async function seq_initialization() {
@@ -154,7 +156,13 @@ let changeProcessor = new Writable({
 changes.pipe(changeProcessor)
 
 changes.on('error', function (e) {
-    console.log(e);
+    console.log("Error while reading/streaming changes - ", e);
+    process.exit(1);
+});
+
+changes.on('end', function () {
+    console.log("No more data to read from the 'changes' stream.");
+    process.exit(1);
 });
 
 function pkgDir(pkgId: string) {
@@ -192,10 +200,25 @@ async function produceMessages(topicName: string, message, change_seq, change_id
 
 //once ever 5 min check the newest seq number of the database to see how far we are behind
 let init_lag = null;
+let last_seq_check = null;
+let run_count = 0;
 const getJSON = bent('json')
 async function checkNewestSeq() {
     try {
         const r = await getJSON(config.couchdb)
+        if (last_seq == last_seq_check)
+        {
+            run_count = run_count + 1;
+        }
+        else
+        {
+            run_count = 0;
+        }
+        if (run_count > 10)
+        {
+            console.log("Last seq hasn't changed in a while, restarting producer");
+            process.exit(1);
+        }
         if (r && r.update_seq) {
             console.log("---- latest seq on NPM Registry: "+r.update_seq)
             newestSeq.set(r.update_seq)
@@ -213,7 +236,8 @@ async function checkNewestSeq() {
                 console.log("Lag decreased, updating init lag - ", init_lag);
             }
         }
+        last_seq_check = last_seq;
     } catch (e) {}
-    setTimeout(checkNewestSeq, 10000)
+    setTimeout(checkNewestSeq, 20000)
 }
 checkNewestSeq()

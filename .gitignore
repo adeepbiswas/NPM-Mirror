@@ -22,3 +22,4 @@ npm-mirror/dbdata
 data_pipeline/npm-mirror/dbdata
 data_pipeline/packages
 data_pipeline/npm-mirror/.env
+data_pipeline/npm-mirror/run_logs.txt

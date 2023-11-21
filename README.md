@@ -121,6 +121,8 @@ To detach from tmux session-
 Control + B followed by D
 ```
 
+Note - If the service has been down for a while, the Kafka messages would be cleared out while the old zookeeper offsets may persist so need to remove the Kafka broker and zookeeper containers if connection refused error is displayed upon docker compose up.
+
 # Producer Restart Logic
 
 Sometimes the Kafka producer might get disconnected from the NPM API and stop reading new changes after having made too many requests. In such a case, the producer automatically gets restarted if the lag between the last seq ID sent to kafka broker and the last seq ID in the NPM grows by more than 200 from the initial lag.
